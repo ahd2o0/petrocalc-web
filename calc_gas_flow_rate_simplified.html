@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculate Gas Flow Rate - PetroCalc Web</title>
+    <title>Gas Flow Rate (Simplified) - PetroCalc Web</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="calc-detail-container">
-        <button class="back-button" onclick="window.location.href='production.html'">
-            &lt; Back to Production Calculations
-        </button>
+    <div class="calculation-container">
+        <div class="back-button-container">
+            <a href="index.html">العودة للصفحة الرئيسية</a>
+        </div>
 
         <h1 class="calc-title">Gas Flow Rate (Simplified)</h1>
+        
+        <p class="calculation-description">
+            تُستخدم هذه الحاسبة لتقدير معدل تدفق الغاز الطبيعي من بئر إنتاجي باستخدام صيغة مبسطة تعتمد على خصائص المكمن والغاز وضغوط البئر.
+        </p>
 
         <div class="input-group">
             <label for="k">Permeability (mD):</label>
@@ -32,10 +37,10 @@
         </div>
         <div class="input-group">
             <label for="mu_g">Gas Viscosity (cP):</label>
-            <input type="number" id="mu_g" placeholder="Enter Viscosity" inputmode="decimal">
+            <input type="number" id="mu_g" placeholder="Enter Gas Viscosity" inputmode="decimal">
         </div>
         <div class="input-group">
-            <label for="z">Gas Compressibility Factor (Z-factor):</label>
+            <label for="z">Z-factor:</label>
             <input type="number" id="z" placeholder="Enter Z-factor" inputmode="decimal">
         </div>
         <div class="input-group">
@@ -51,9 +56,9 @@
             <input type="number" id="rw" placeholder="Enter Wellbore Radius" inputmode="decimal">
         </div>
         
-        <div class="calc-buttons-group">
-            <button id="calcButton" class="calc-button">Calculate</button>
-            <button id="clearButton" class="clear-button">Clear</button>
+        <div class="button-group">
+            <button id="calcButton" class="calculate">Calculate</button>
+            <button id="clearButton" class="clear">Clear</button>
         </div>
 
         <div class="result-box">
@@ -61,15 +66,44 @@
             <p id="result" class="result-text">Results will appear here.</p>
         </div>
 
-        <div class="footer">
-            <p>Engineer: Ahmed Othman Jameel</p>
-            <p>Instagram: AHD.2o0</p>
         </div>
-    </div>
 
     <script src="js/calculations.js"></script>
     <script>
-        initializeCalcPage(calcGasFlowRateSimplified, ['k', 'h', 'pr_sq', 'pwf_sq', 'mu_g', 'z', 't', 're', 'rw']);
+        document.getElementById('calcButton').addEventListener('click', function() {
+            const k = parseFloat(document.getElementById('k').value);
+            const h = parseFloat(document.getElementById('h').value);
+            const pr_sq = parseFloat(document.getElementById('pr_sq').value);
+            const pwf_sq = parseFloat(document.getElementById('pwf_sq').value);
+            const mu_g = parseFloat(document.getElementById('mu_g').value);
+            const z = parseFloat(document.getElementById('z').value);
+            const t = parseFloat(document.getElementById('t').value);
+            const re = parseFloat(document.getElementById('re').value);
+            const rw = parseFloat(document.getElementById('rw').value);
+            const resultDisplay = document.getElementById('result');
+
+            if (isNaN(k) || isNaN(h) || isNaN(pr_sq) || isNaN(pwf_sq) || isNaN(mu_g) || isNaN(z) || isNaN(t) || isNaN(re) || isNaN(rw) || mu_g === 0 || z === 0 || t === 0 || re === 0 || rw === 0 || (re / rw) <= 1) {
+                resultDisplay.innerHTML = '<span class="error-message">Please enter valid non-zero numbers for all fields, ensuring Drainage Radius is greater than Wellbore Radius.</span>';
+                return;
+            }
+
+            // Simplified Gas Flow Rate formula: qg = (k * h * (Pr^2 - Pwf^2)) / (1424 * mu_g * z * T * ln(re/rw))
+            const qg = (k * h * (pr_sq - pwf_sq)) / (1424 * mu_g * z * t * Math.log(re / rw));
+            resultDisplay.innerHTML = `Gas Flow Rate: <span class="value">${qg.toFixed(3)}</span> MSCF/Day`;
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('k').value = '';
+            document.getElementById('h').value = '';
+            document.getElementById('pr_sq').value = '';
+            document.getElementById('pwf_sq').value = '';
+            document.getElementById('mu_g').value = '';
+            document.getElementById('z').value = '';
+            document.getElementById('t').value = '';
+            document.getElementById('re').value = '';
+            document.getElementById('rw').value = '';
+            document.getElementById('result').innerHTML = 'Results will appear here.';
+        });
     </script>
 </body>
 </html>

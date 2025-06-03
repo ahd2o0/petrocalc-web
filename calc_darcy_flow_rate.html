@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculate Darcy Flow Rate - PetroCalc Web</title>
+    <title>Darcy Flow Rate - PetroCalc Web</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="calc-detail-container">
-        <button class="back-button" onclick="window.location.href='production.html'">
-            &lt; Back to Production Calculations
-        </button>
+    <div class="calculation-container">
+        <div class="back-button-container">
+            <a href="index.html">العودة للصفحة الرئيسية</a>
+        </div>
 
         <h1 class="calc-title">Oil Flow Rate (Darcy's Law)</h1>
+        
+        <p class="calculation-description">
+            تقوم هذه الحاسبة بتقدير معدل تدفق النفط عبر وسط مسامي باستخدام قانون دارسي، وهو أساسي لفهم سلوك السوائل في المكامن.
+        </p>
 
         <div class="input-group">
             <label for="k">Permeability (mD):</label>
@@ -39,9 +44,9 @@
             <input type="number" id="bo" placeholder="Enter FVF" inputmode="decimal">
         </div>
         
-        <div class="calc-buttons-group">
-            <button id="calcButton" class="calc-button">Calculate</button>
-            <button id="clearButton" class="clear-button">Clear</button>
+        <div class="button-group">
+            <button id="calcButton" class="calculate">Calculate</button>
+            <button id="clearButton" class="clear">Clear</button>
         </div>
 
         <div class="result-box">
@@ -49,15 +54,38 @@
             <p id="result" class="result-text">Results will appear here.</p>
         </div>
 
-        <div class="footer">
-            <p>Engineer: Ahmed Othman Jameel</p>
-            <p>Instagram: AHD.2o0</p>
         </div>
-    </div>
-
     <script src="js/calculations.js"></script>
     <script>
-        initializeCalcPage(calcDarcyFlowRate, ['k', 'A', 'delta_p', 'mu', 'L', 'bo']);
+        // Darcy's Law Calculation (Oil Flow Rate)
+        document.getElementById('calcButton').addEventListener('click', function() {
+            const k = parseFloat(document.getElementById('k').value);
+            const A = parseFloat(document.getElementById('A').value);
+            const delta_p = parseFloat(document.getElementById('delta_p').value);
+            const mu = parseFloat(document.getElementById('mu').value);
+            const L = parseFloat(document.getElementById('L').value);
+            const bo = parseFloat(document.getElementById('bo').value);
+            const resultDisplay = document.getElementById('result');
+
+            if (isNaN(k) || isNaN(A) || isNaN(delta_p) || isNaN(mu) || isNaN(L) || isNaN(bo) || mu === 0 || L === 0 || bo === 0) {
+                resultDisplay.innerHTML = '<span class="error-message">Please enter valid non-zero numbers for all fields.</span>';
+                return;
+            }
+
+            // q = (1.127 * k * A * delta_p) / (mu * L * bo)
+            const q = (1.127 * k * A * delta_p) / (mu * L * bo);
+            resultDisplay.innerHTML = `Oil Flow Rate: <span class="value">${q.toFixed(3)}</span> STB/Day`;
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('k').value = '';
+            document.getElementById('A').value = '';
+            document.getElementById('delta_p').value = '';
+            document.getElementById('mu').value = '';
+            document.getElementById('L').value = '';
+            document.getElementById('bo').value = '';
+            document.getElementById('result').innerHTML = 'Results will appear here.';
+        });
     </script>
 </body>
 </html>

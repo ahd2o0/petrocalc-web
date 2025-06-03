@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculate Hydrostatic Pressure - PetroCalc Web</title>
+    <title>Hydrostatic Pressure - PetroCalc Web</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="calc-detail-container">
-        <button class="back-button" onclick="window.location.href='drilling.html'">
-            &lt; Back to Drilling Calculations
-        </button>
+    <div class="calculation-container">
+        <div class="back-button-container">
+            <a href="index.html">العودة للصفحة الرئيسية</a>
+        </div>
 
         <h1 class="calc-title">Hydrostatic Pressure</h1>
+        
+        <p class="calculation-description">
+            تحسب هذه الحاسبة الضغط الهيدروستاتيكي الذي يمارسه عمود سائل الحفر في البئر، وهو عامل حاسم للتحكم في البئر ومنع انفجارات الضغط.
+        </p>
 
         <div class="input-group">
             <label for="ppg">Mud Weight (ppg):</label>
@@ -23,9 +28,9 @@
             <input type="number" id="tvd" placeholder="Enter Depth" inputmode="decimal">
         </div>
         
-        <div class="calc-buttons-group">
-            <button id="calcButton" class="calc-button">Calculate</button>
-            <button id="clearButton" class="clear-button">Clear</button>
+        <div class="button-group">
+            <button id="calcButton" class="calculate">Calculate</button>
+            <button id="clearButton" class="clear">Clear</button>
         </div>
 
         <div class="result-box">
@@ -33,15 +38,30 @@
             <p id="result" class="result-text">Results will appear here.</p>
         </div>
 
-        <div class="footer">
-            <p>Engineer: Ahmed Othman Jameel</p>
-            <p>Instagram: AHD.2o0</p>
         </div>
-    </div>
 
     <script src="js/calculations.js"></script>
     <script>
-        initializeCalcPage(calcMw, ['ppg', 'tvd']);
+        document.getElementById('calcButton').addEventListener('click', function() {
+            const ppg = parseFloat(document.getElementById('ppg').value);
+            const tvd = parseFloat(document.getElementById('tvd').value);
+            const resultDisplay = document.getElementById('result');
+
+            if (isNaN(ppg) || isNaN(tvd)) {
+                resultDisplay.innerHTML = '<span class="error-message">Please enter valid numbers for Mud Weight and True Vertical Depth.</span>';
+                return;
+            }
+
+            // Hydrostatic Pressure (psi) = 0.052 * Mud Weight (ppg) * True Vertical Depth (ft)
+            const hp = 0.052 * ppg * tvd;
+            resultDisplay.innerHTML = `Hydrostatic Pressure: <span class="value">${hp.toFixed(3)}</span> psi`;
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('ppg').value = '';
+            document.getElementById('tvd').value = '';
+            document.getElementById('result').innerHTML = 'Results will appear here.';
+        });
     </script>
 </body>
 </html>

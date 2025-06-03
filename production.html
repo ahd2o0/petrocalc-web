@@ -5,29 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production Calculations - PetroCalc Web</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="category-container">
-        <button class="back-button" onclick="window.location.href='index.html'">
-            &lt; Back to Main Menu
-        </button>
-
-        <h1 class="category-title">Production Calculations</h1>
-
-        <div class="category-buttons-layout">
-            <button class="category-button" onclick="window.location.href='calc_darcy_flow_rate.html'">Oil Flow Rate (Darcy)</button>
-            <button class="category-button" onclick="window.location.href='calc_wor.html'">Water Oil Ratio (WOR)</button>
-            <button class="category-button" onclick="window.location.href='calc_gas_flow_rate_simplified.html'">Gas Flow Rate (Simplified)</button>
-            <button class="category-button" onclick="window.location.href='calc_pump_efficiency.html'">Pump Efficiency</button>
-            <button class="category-button" onclick="window.location.href='calc_corrosion_rate.html'">Corrosion Rate</button>
-            <button class="category-button" onclick="window.location.href='calc_tank_volume.html'">Cylindrical Tank Volume</button>
-            <button class="category-button" onclick="window.location.href='calc_water_cut.html'">Water Cut</button>
+    <div class="main-container"> <div class="back-button-container">
+            <a href="index.html">العودة للصفحة الرئيسية</a>
         </div>
 
-        <div class="footer">
-            <p>Engineer: Ahmed Othman Jameel</p>
-            <p>Instagram: AHD.2o0</p>
+        <h1 class="main-title">Production Calculations</h1> <div class="menu-buttons-layout"> <button class="menu-button" onclick="window.location.href='calc_darcy_flow_rate.html'"><i class="fas fa-water"></i> Oil Flow Rate (Darcy)</button>
+            <button class="menu-button" onclick="window.location.href='calc_wor.html'"><i class="fas fa-water-ladder"></i> Water Oil Ratio (WOR)</button>
+            <button class="menu-button" onclick="window.location.href='calc_gas_flow_rate_simplified.html'"><i class="fas fa-gas-pump"></i> Gas Flow Rate (Simplified)</button>
+            <button class="menu-button" onclick="window.location.href='calc_pump_efficiency.html'"><i class="fas fa-percent"></i> Pump Efficiency</button>
+            <button class="menu-button" onclick="window.location.href='calc_corrosion_rate.html'"><i class="fas fa-shield-alt"></i> Corrosion Rate</button>
+            <button class="menu-button" onclick="window.location.href='calc_tank_volume.html'"><i class="fas fa-truck-tank"></i> Cylindrical Tank Volume</button>
+            <button class="menu-button" onclick="window.location.href='calc_water_cut.html'"><i class="fas fa-tint"></i> Water Cut</button>
         </div>
+
     </div>
-</body>
+    </body>
 </html>

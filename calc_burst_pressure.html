@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculate Burst Pressure - PetroCalc Web</title>
+    <title>Burst Pressure - PetroCalc Web</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="calc-detail-container">
-        <button class="back-button" onclick="window.location.href='drilling.html'">
-            &lt; Back to Drilling Calculations
-        </button>
+    <div class="calculation-container">
+        <div class="back-button-container">
+            <a href="index.html">العودة للصفحة الرئيسية</a>
+        </div>
 
         <h1 class="calc-title">Burst Pressure</h1>
+        
+        <p class="calculation-description">
+            تُحدد هذه الحاسبة أقصى ضغط داخلي يمكن أن يتحمله الأنبوب أو الغلاف قبل أن ينفجر، وهي ضرورية لتصميم واختيار الأنابيب في عمليات الحفر والإنتاج.
+        </p>
 
         <div class="input-group">
             <label for="yield_strength">Yield Strength (psi):</label>
@@ -27,9 +32,9 @@
             <input type="number" id="t" placeholder="Enter Wall Thickness" inputmode="decimal">
         </div>
         
-        <div class="calc-buttons-group">
-            <button id="calcButton" class="calc-button">Calculate</button>
-            <button id="clearButton" class="clear-button">Clear</button>
+        <div class="button-group">
+            <button id="calcButton" class="calculate">Calculate</button>
+            <button id="clearButton" class="clear">Clear</button>
         </div>
 
         <div class="result-box">
@@ -37,15 +42,36 @@
             <p id="result" class="result-text">Results will appear here.</p>
         </div>
 
-        <div class="footer">
-            <p>Engineer: Ahmed Othman Jameel</p>
-            <p>Instagram: AHD.2o0</p>
         </div>
-    </div>
 
     <script src="js/calculations.js"></script>
     <script>
-        initializeCalcPage(calcBurstPressure, ['yield_strength', 'od', 't']);
+        document.getElementById('calcButton').addEventListener('click', function() {
+            const yield_strength = parseFloat(document.getElementById('yield_strength').value);
+            const od = parseFloat(document.getElementById('od').value);
+            const t = parseFloat(document.getElementById('t').value);
+            const resultDisplay = document.getElementById('result');
+
+            if (isNaN(yield_strength) || isNaN(od) || isNaN(t) || od === 0 || t === 0) {
+                resultDisplay.innerHTML = '<span class="error-message">Please enter valid non-zero numbers for all fields.</span>';
+                return;
+            }
+            if (t * 2 >= od) {
+                resultDisplay.innerHTML = '<span class="error-message">Wall thickness cannot be half or more than the outer diameter.</span>';
+                return;
+            }
+
+            // Burst Pressure (psi) = (2 * Yield Strength * Wall Thickness) / Outer Diameter
+            const burst_pressure = (2 * yield_strength * t) / od;
+            resultDisplay.innerHTML = `Burst Pressure: <span class="value">${burst_pressure.toFixed(3)}</span> psi`;
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('yield_strength').value = '';
+            document.getElementById('od').value = '';
+            document.getElementById('t').value = '';
+            document.getElementById('result').innerHTML = 'Results will appear here.';
+        });
     </script>
 </body>
 </html>

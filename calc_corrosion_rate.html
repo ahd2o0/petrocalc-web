@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculate Corrosion Rate - PetroCalc Web</title>
+    <title>Corrosion Rate - PetroCalc Web</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="calc-detail-container">
-        <button class="back-button" onclick="window.location.href='production.html'">
-            &lt; Back to Production Calculations
-        </button>
+    <div class="calculation-container">
+        <div class="back-button-container">
+            <a href="index.html">العودة للصفحة الرئيسية</a>
+        </div>
 
         <h1 class="calc-title">Corrosion Rate</h1>
+        
+        <p class="calculation-description">
+            تُحسب هذه الحاسبة معدل تآكل المعدات على مدى فترة زمنية، وهي أداة مهمة لتقييم العمر الافتراضي للمعدات النفطية وتخطيط الصيانة.
+        </p>
 
         <div class="input-group">
             <label for="initial_thickness">Initial Thickness (mm):</label>
@@ -27,9 +32,9 @@
             <input type="number" id="time" placeholder="Enter Time in Years" inputmode="decimal">
         </div>
         
-        <div class="calc-buttons-group">
-            <button id="calcButton" class="calc-button">Calculate</button>
-            <button id="clearButton" class="clear-button">Clear</button>
+        <div class="button-group">
+            <button id="calcButton" class="calculate">Calculate</button>
+            <button id="clearButton" class="clear">Clear</button>
         </div>
 
         <div class="result-box">
@@ -37,15 +42,36 @@
             <p id="result" class="result-text">Results will appear here.</p>
         </div>
 
-        <div class="footer">
-            <p>Engineer: Ahmed Othman Jameel</p>
-            <p>Instagram: AHD.2o0</p>
         </div>
-    </div>
 
     <script src="js/calculations.js"></script>
     <script>
-        initializeCalcPage(calcCorrosionRate, ['initial_thickness', 'final_thickness', 'time']);
+        document.getElementById('calcButton').addEventListener('click', function() {
+            const initial_thickness = parseFloat(document.getElementById('initial_thickness').value);
+            const final_thickness = parseFloat(document.getElementById('final_thickness').value);
+            const time = parseFloat(document.getElementById('time').value);
+            const resultDisplay = document.getElementById('result');
+
+            if (isNaN(initial_thickness) || isNaN(final_thickness) || isNaN(time) || time === 0) {
+                resultDisplay.innerHTML = '<span class="error-message">Please enter valid non-zero numbers for all fields.</span>';
+                return;
+            }
+            if (initial_thickness < final_thickness) {
+                resultDisplay.innerHTML = '<span class="error-message">Initial thickness cannot be less than final thickness.</span>';
+                return;
+            }
+
+            // Corrosion Rate (mm/year) = (Initial Thickness - Final Thickness) / Time
+            const corrosion_rate = (initial_thickness - final_thickness) / time;
+            resultDisplay.innerHTML = `Corrosion Rate: <span class="value">${corrosion_rate.toFixed(3)}</span> mm/year`;
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('initial_thickness').value = '';
+            document.getElementById('final_thickness').value = '';
+            document.getElementById('time').value = '';
+            document.getElementById('result').innerHTML = 'Results will appear here.';
+        });
     </script>
 </body>
 </html>

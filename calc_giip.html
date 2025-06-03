@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculate GIIP - PetroCalc Web</title>
+    <title>GIIP Estimation - PetroCalc Web</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="calc-detail-container">
-        <button class="back-button" onclick="window.location.href='reservoir.html'">
-            &lt; Back to Reservoir Calculations
-        </button>
+    <div class="calculation-container">
+        <div class="back-button-container">
+            <a href="index.html">العودة للصفحة الرئيسية</a>
+        </div>
 
         <h1 class="calc-title">Original Gas In Place (GIIP) Estimation</h1>
+        
+        <p class="calculation-description">
+            تُقدر هذه الحاسبة إجمالي حجم الغاز الطبيعي الموجود في المكمن قبل بدء الإنتاج، وهو مؤشر حيوي لتقييم الاحتياطيات.
+        </p>
 
         <div class="input-group">
             <label for="area">Drainage Area (acres):</label>
@@ -35,9 +40,9 @@
             <input type="number" id="bg" placeholder="Enter Gas Formation Volume Factor" step="0.01" inputmode="decimal">
         </div>
 
-        <div class="calc-buttons-group">
-            <button id="calcButton" class="calc-button">Calculate</button>
-            <button id="clearButton" class="clear-button">Clear</button>
+        <div class="button-group">
+            <button id="calcButton" class="calculate">Calculate</button>
+            <button id="clearButton" class="clear">Clear</button>
         </div>
 
         <div class="result-box">
@@ -45,16 +50,40 @@
             <p id="result" class="result-text">Results will appear here.</p>
         </div>
 
-        <div class="footer">
-            <p>Engineer: Ahmed Othman Jameel</p>
-            <p>Instagram: AHD.2o0</p>
         </div>
-    </div>
 
     <script src="js/calculations.js"></script>
     <script>
-        // Initialize this page for GIIP calculation
-        initializeCalcPage(calcGiip, ['area', 'h', 'phi', 'sg', 'bg']);
+        document.getElementById('calcButton').addEventListener('click', function() {
+            const area = parseFloat(document.getElementById('area').value);
+            const h = parseFloat(document.getElementById('h').value);
+            const phi = parseFloat(document.getElementById('phi').value);
+            const sg = parseFloat(document.getElementById('sg').value);
+            const bg = parseFloat(document.getElementById('bg').value);
+            const resultDisplay = document.getElementById('result');
+
+            if (isNaN(area) || isNaN(h) || isNaN(phi) || isNaN(sg) || isNaN(bg) || phi === 0 || bg === 0) {
+                resultDisplay.innerHTML = '<span class="error-message">Please enter valid non-zero numbers for all fields.</span>';
+                return;
+            }
+            if (phi < 0 || phi > 1 || sg < 0 || sg > 1) {
+                resultDisplay.innerHTML = '<span class="error-message">Porosity and Saturation must be between 0 and 1.</span>';
+                return;
+            }
+
+            // GIIP = (43560 * Area * h * phi * Sg) / Bg
+            const giip = (43560 * area * h * phi * sg) / bg;
+            resultDisplay.innerHTML = `Original Gas In Place: <span class="value">${giip.toFixed(3)}</span> SCF`;
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('area').value = '';
+            document.getElementById('h').value = '';
+            document.getElementById('phi').value = '';
+            document.getElementById('sg').value = '';
+            document.getElementById('bg').value = '';
+            document.getElementById('result').innerHTML = 'Results will appear here.';
+        });
     </script>
 </body>
 </html>
