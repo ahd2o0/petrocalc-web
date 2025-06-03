@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentals & Conversions - PetroCalc Web</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="info-container">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            &lt; Back to Main Menu
+        </button>
+
+        <h1 class="category-title">Fundamentals & Conversions</h1>
+
+        <div class="info-content">
+            <h3>Common Constants:</h3>
+            <ul>
+                <li>1 acre = 43,560 square feet</li>
+                <li>1 barrel (bbl) = 42 US gallons</li>
+                <li>1 barrel (bbl) = 5.615 cubic feet</li>
+                <li>1 cubic foot = 7.48 US gallons</li>
+                <li>1 psi = 6.89476 kPa</li>
+                <li>1 MPa = 145.038 psi</li>
+                <li>1 millidarcy (mD) = 9.869233 × 10⁻¹⁶ square meters (permeability)</li>
+                <li>Standard Temperature & Pressure (STP): 60°F (520 Rankine) and 14.7 psi</li>
+            </ul>
+
+            <h3>Unit Converter (Barrels to Cubic Feet):</h3>
+            <div class="input-group">
+                <label for="barrelsInput">Enter Barrels:</label>
+                <input type="number" id="barrelsInput" placeholder="Enter number in barrels" inputmode="decimal">
+            </div>
+            <div class="calc-buttons-group">
+                <button class="calc-button" onclick="convertBarrelsToCubicFeet()">Convert</button>
+                <button class="clear-button" onclick="clearBarrelConversion()">Clear</button>
+            </div>
+            <div class="result-box">
+                <h2>Result:</h2>
+                <p id="barrelsToFt3Result" class="result-text">Cubic feet will appear here.</p>
+            </div>
+            
+            <script>
+                function convertBarrelsToCubicFeet() {
+                    const barrels = parseFloat(document.getElementById('barrelsInput').value);
+                    if (isNaN(barrels)) {
+                        document.getElementById('barrelsToFt3Result').textContent = "Error: Please enter a valid number.";
+                        return;
+                    }
+                    const cubicFeet = barrels * 5.615;
+                    document.getElementById('barrelsToFt3Result').textContent = `${cubicFeet.toFixed(2)} cubic feet`;
+                }
+                function clearBarrelConversion() {
+                    document.getElementById('barrelsInput').value = '';
+                    document.getElementById('barrelsToFt3Result').textContent = "Cubic feet will appear here.";
+                }
+            </script>
+        </div>
+
+        <div class="footer">
+            <p>Engineer: Ahmed Othman Jameel</p>
+            <p>Instagram: AHD.2o0</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Gas Flow Rate - PetroCalc Web</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="calc-detail-container">
+        <button class="back-button" onclick="window.location.href='production.html'">
+            &lt; Back to Production Calculations
+        </button>
+
+        <h1 class="calc-title">Gas Flow Rate (Simplified)</h1>
+
+        <div class="input-group">
+            <label for="k">Permeability (mD):</label>
+            <input type="number" id="k" placeholder="Enter Permeability" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="h">Net Pay Thickness (feet):</label>
+            <input type="number" id="h" placeholder="Enter Thickness" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="pr_sq">Reservoir Pressure Squared (psi²):</label>
+            <input type="number" id="pr_sq" placeholder="Enter Reservoir Pressure Squared" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="pwf_sq">Bottomhole Pressure Squared (psi²):</label>
+            <input type="number" id="pwf_sq" placeholder="Enter Bottomhole Pressure Squared" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="mu_g">Gas Viscosity (cP):</label>
+            <input type="number" id="mu_g" placeholder="Enter Viscosity" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="z">Gas Compressibility Factor (Z-factor):</label>
+            <input type="number" id="z" placeholder="Enter Z-factor" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="t">Temperature (Rankine):</label>
+            <input type="number" id="t" placeholder="Enter Temperature in Rankine" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="re">Drainage Radius (feet):</label>
+            <input type="number" id="re" placeholder="Enter Drainage Radius" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="rw">Wellbore Radius (feet):</label>
+            <input type="number" id="rw" placeholder="Enter Wellbore Radius" inputmode="decimal">
+        </div>
+        
+        <div class="calc-buttons-group">
+            <button id="calcButton" class="calc-button">Calculate</button>
+            <button id="clearButton" class="clear-button">Clear</button>
+        </div>
+
+        <div class="result-box">
+            <h2>Result:</h2>
+            <p id="result" class="result-text">Results will appear here.</p>
+        </div>
+
+        <div class="footer">
+            <p>Engineer: Ahmed Othman Jameel</p>
+            <p>Instagram: AHD.2o0</p>
+        </div>
+    </div>
+
+    <script src="js/calculations.js"></script>
+    <script>
+        initializeCalcPage(calcGasFlowRateSimplified, ['k', 'h', 'pr_sq', 'pwf_sq', 'mu_g', 'z', 't', 're', 'rw']);
+    </script>
+</body>
+</html>

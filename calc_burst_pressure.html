@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Burst Pressure - PetroCalc Web</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="calc-detail-container">
+        <button class="back-button" onclick="window.location.href='drilling.html'">
+            &lt; Back to Drilling Calculations
+        </button>
+
+        <h1 class="calc-title">Burst Pressure</h1>
+
+        <div class="input-group">
+            <label for="yield_strength">Yield Strength (psi):</label>
+            <input type="number" id="yield_strength" placeholder="Enter Yield Strength" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="od">Pipe Outer Diameter (inches):</label>
+            <input type="number" id="od" placeholder="Enter OD" inputmode="decimal">
+        </div>
+        <div class="input-group">
+            <label for="t">Pipe Wall Thickness (inches):</label>
+            <input type="number" id="t" placeholder="Enter Wall Thickness" inputmode="decimal">
+        </div>
+        
+        <div class="calc-buttons-group">
+            <button id="calcButton" class="calc-button">Calculate</button>
+            <button id="clearButton" class="clear-button">Clear</button>
+        </div>
+
+        <div class="result-box">
+            <h2>Result:</h2>
+            <p id="result" class="result-text">Results will appear here.</p>
+        </div>
+
+        <div class="footer">
+            <p>Engineer: Ahmed Othman Jameel</p>
+            <p>Instagram: AHD.2o0</p>
+        </div>
+    </div>
+
+    <script src="js/calculations.js"></script>
+    <script>
+        initializeCalcPage(calcBurstPressure, ['yield_strength', 'od', 't']);
+    </script>
+</body>
+</html>

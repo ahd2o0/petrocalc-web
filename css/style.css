@@ -1,0 +1,265 @@
+/* Luxury colors used in Kivy */
+:root {
+    --color-primary-dark-blue: #0c2640; /* 0.05, 0.15, 0.25, 1 */
+    --color-accent-blue: #1a6699; /* 0.1, 0.4, 0.6, 1 */
+    --color-text-light: #f2f2f2; /* 0.95, 0.95, 0.95, 1 */
+    --color-text-muted: #b3b3b3; /* 0.7, 0.7, 0.7, 1 */
+    --color-background-light: #1a1a1a; /* 0.1, 0.1, 0.1, 1 */
+    --color-gradient-start: #1a334d; /* 0.1, 0.2, 0.3, 1 */
+    --color-gradient-end: #0d1a26; /* 0.05, 0.1, 0.15, 1 */
+    --color-error: #e64c4c; /* 0.9, 0.3, 0.3, 1 */
+    --color-button-hover: #2680b3; /* 0.15, 0.5, 0.75, 1 */
+    --color-button-clear: #994d1a; /* 0.6, 0.3, 0.1, 1 */
+    --color-result-box-bg: #143859; /* 0.08, 0.22, 0.35, 1 */
+}
+
+/* General body styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, var(--color-gradient-start), var(--color-gradient-end));
+    color: var(--color-text-light);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Content starts from the top */
+    min-height: 100vh;
+    direction: ltr; /* Set direction to left-to-right for the entire page */
+}
+
+/* Main container for centering content */
+.main-container, .category-container, .calc-detail-container, .info-container {
+    background-color: var(--color-primary-dark-blue);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 450px; /* Approximately Kivy width */
+    box-sizing: border-box;
+    margin: 20px auto; /* Center container with top and bottom margin */
+    min-height: calc(100vh - 40px); /* Takes almost full screen height */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Titles */
+.main-title, .category-title, .calc-title {
+    color: var(--color-accent-blue);
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.main-title {
+    font-size: 32px; /* Slightly larger for main page */
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-title {
+    font-size: 28px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calc-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main menu and category buttons */
+.menu-buttons-layout, .category-buttons-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-grow: 1; /* To expand buttons and cover available space */
+    justify-content: center; /* Center buttons vertically */
+}
+
+.menu-button, .category-button {
+    background-color: var(--color-accent-blue);
+    color: #fff;
+    border: none;
+    padding: 18px 20px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.menu-button:hover, .category-button:hover {
+    background-color: var(--color-button-hover);
+    transform: translateY(-2px); /* Slight hover effect */
+}
+
+.menu-button:active, .category-button:active {
+    transform: scale(0.98); /* Press effect */
+}
+
+/* Back button */
+.back-button {
+    background-color: var(--color-accent-blue);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: fit-content; /* Fit content size */
+    margin-bottom: 20px;
+    align-self: flex-start; /* Position at the start of the container (left) */
+}
+
+.back-button:hover {
+    background-color: var(--color-button-hover);
+}
+
+/* Input fields */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: var(--color-text-light);
+    text-align: left; /* Align label to the left */
+}
+
+.input-group input[type="number"],
+.input-group input[type="text"] {
+    width: calc(100% - 24px); /* Subtract padding from total width */
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-background-light);
+    color: var(--color-text-light);
+    font-size: 16px;
+    outline: none; /* Remove outline on focus */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.input-group input[type="number"]:focus,
+.input-group input[type="text"]:focus {
+    background-color: #1a2a3a; /* Slightly darker on focus */
+    box-shadow: 0 0 0 2px var(--color-accent-blue); /* Blue border */
+}
+
+/* Calculate and Clear buttons */
+.calc-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.calc-button, .clear-button {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.calc-button {
+    background-color: var(--color-accent-blue);
+}
+
+.calc-button:hover {
+    background-color: var(--color-button-hover);
+}
+
+.clear-button {
+    background-color: var(--color-button-clear);
+}
+
+.clear-button:hover {
+    background-color: #b3662d; /* Hover color for clear buttons */
+}
+
+/* Result area */
+.result-box {
+    background-color: var(--color-result-box-bg);
+    padding: 15px;
+    border-radius: 8px;
+    min-height: 120px; /* Ensure enough space for results */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); /* Inner shadow */
+}
+
+.result-box h2 {
+    color: var(--color-accent-blue);
+    font-size: 18px;
+    margin: 0 0 10px 0;
+    text-align: left; /* Align to the left */
+}
+
+.result-text {
+    font-size: 18px;
+    color: var(--color-text-light);
+    white-space: pre-wrap; /* Preserve new line formatting */
+    overflow-y: auto; /* Add scrollbar if content is too long */
+    max-height: 80px; /* Max height */
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left; /* Align to the left */
+}
+
+/* Info text (General and Fundamentals pages) */
+.info-content {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: left; /* Align to the left */
+    margin-bottom: 20px;
+}
+
+.info-content h3 {
+    color: var(--color-accent-blue);
+    font-size: 20px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: left; /* Align to the left */
+}
+
+.info-content ul {
+    list-style-type: disc;
+    padding-left: 20px; /* Adjust padding for LTR */
+}
+
+.info-content li {
+    margin-bottom: 8px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: auto; /* Push footer to the bottom */
+    padding-top: 20px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
