@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetroCalc - Capillary Pressure</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="main-container">
+        <h1 class="main-title">Capillary Pressure Calculations</h1>
+        <p class="subtitle">Estimate height above free water level from capillary pressure data.</p>
+
+        <div class="calculation-section">
+            <h2 class="section-title">Height from Capillary Pressure</h2>
+            <div class="input-group">
+                <label for="pc">Capillary Pressure (Pc) (psi):</label>
+                <input type="number" id="pc" placeholder="e.g., 5">
+            </div>
+            <div class="input-group">
+                <label for="oilDensity">Oil Specific Gravity (SG):</label>
+                <input type="number" id="oilDensity" placeholder="e.g., 0.85 (for 35 API)">
+            </div>
+            <div class="input-group">
+                <label for="waterDensity">Water Specific Gravity (SG):</label>
+                <input type="number" id="waterDensity" placeholder="e.g., 1.03 (for saline water)">
+            </div>
+            <button id="calcButton" class="calc-button">Calculate Height</button>
+            <button id="clearButton" class="clear-button">Clear Fields</button>
+            <div class="result-area" id="result">Results will appear here.</div>
+        </div>
+
+        <div class="back-button-container">
+            <a href="#" onclick="history.back(); return false;">Back</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About Us</a> |
+            <a href="contact.html">Contact Us</a> |
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
+    </footer>
+
+    <script src="js/calculations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCalcPage(calcPcHeight, ['pc', 'oilDensity', 'waterDensity']);
+        });
+    </script>
+</body>
+</html>

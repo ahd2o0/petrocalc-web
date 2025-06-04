@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetroCalc - Relative Permeability</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="main-container">
+        <h1 class="main-title">Relative Permeability Calculations (Corey's Model)</h1>
+        <p class="subtitle">Calculate relative permeability to oil (Kro) and water (Krw) for an oil-water system.</p>
+
+        <div class="calculation-section">
+            <h2 class="section-title">Relative Permeability to Oil (Kro)</h2>
+            <div class="input-group">
+                <label for="sw_kro">Water Saturation (Sw) (fraction):</label>
+                <input type="number" id="sw_kro" placeholder="e.g., 0.40">
+            </div>
+            <div class="input-group">
+                <label for="swc_kro">Connate Water Saturation (Swc) (fraction):</label>
+                <input type="number" id="swc_kro" placeholder="e.g., 0.20">
+            </div>
+            <div class="input-group">
+                <label for="sor_kro">Residual Oil Saturation (Sor) (fraction):</label>
+                <input type="number" id="sor_kro" placeholder="e.g., 0.15">
+            </div>
+            <div class="input-group">
+                <label for="kro_max">Max Kro (at Swc) (fraction):</label>
+                <input type="number" id="kro_max" placeholder="e.g., 0.8">
+            </div>
+            <button id="calcKroButton" class="calc-button">Calculate Kro</button>
+            <div class="result-area" id="kroResult">Results will appear here.</div>
+
+            <h2 class="section-title">Relative Permeability to Water (Krw)</h2>
+            <div class="input-group">
+                <label for="sw_krw">Water Saturation (Sw) (fraction):</label>
+                <input type="number" id="sw_krw" placeholder="e.g., 0.40">
+            </div>
+            <div class="input-group">
+                <label for="swc_krw">Connate Water Saturation (Swc) (fraction):</label>
+                <input type="number" id="swc_krw" placeholder="e.g., 0.20">
+            </div>
+            <div class="input-group">
+                <label for="sor_krw">Residual Oil Saturation (Sor) (fraction):</label>
+                <input type="number" id="sor_krw" placeholder="e.g., 0.15">
+            </div>
+            <div class="input-group">
+                <label for="krw_max">Max Krw (at Sor) (fraction):</label>
+                <input type="number" id="krw_max" placeholder="e.g., 0.3">
+            </div>
+            <button id="calcKrwButton" class="calc-button">Calculate Krw</button>
+            <div class="result-area" id="krwResult">Results will appear here.</div>
+
+            <button id="clearButton" class="clear-button">Clear Fields</button>
+        </div>
+
+        <div class="back-button-container">
+            <a href="#" onclick="history.back(); return false;">Back</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About Us</a> |
+            <a href="contact.html">Contact Us</a> |
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
+    </footer>
+
+    <script src="js/calculations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Kro Calculation
+            document.getElementById('calcKroButton').addEventListener('click', () => {
+                const sw = parseFloat(document.getElementById('sw_kro').value);
+                const swc = parseFloat(document.getElementById('swc_kro').value);
+                const sor = parseFloat(document.getElementById('sor_kro').value);
+                const kro_max = parseFloat(document.getElementById('kro_max').value);
+                document.getElementById('kroResult').textContent = calcKro(sw, swc, sor, kro_max);
+            });
+
+            // Krw Calculation
+            document.getElementById('calcKrwButton').addEventListener('click', () => {
+                const sw = parseFloat(document.getElementById('sw_krw').value);
+                const swc = parseFloat(document.getElementById('swc_krw').value);
+                const sor = parseFloat(document.getElementById('sor_krw').value);
+                const krw_max = parseFloat(document.getElementById('krw_max').value);
+                document.getElementById('krwResult').textContent = calcKrw(sw, swc, sor, krw_max);
+            });
+
+            // Clear All Fields
+            document.getElementById('clearButton').addEventListener('click', () => {
+                document.getElementById('sw_kro').value = '';
+                document.getElementById('swc_kro').value = '';
+                document.getElementById('sor_kro').value = '';
+                document.getElementById('kro_max').value = '';
+                document.getElementById('kroResult').textContent = 'Results will appear here.';
+                document.getElementById('sw_krw').value = '';
+                document.getElementById('swc_krw').value = '';
+                document.getElementById('sor_krw').value = '';
+                document.getElementById('krw_max').value = '';
+                document.getElementById('krwResult').textContent = 'Results will appear here.';
+            });
+        });
+    </script>
+</body>
+</html>

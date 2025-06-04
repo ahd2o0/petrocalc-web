@@ -1,6 +1,6 @@
 /* Luxury colors used in Kivy */
 :root {
-    /* ألوان أساسية محسنة */
+    /* Default - Dark Mode Colors (similar to your current theme) */
     --color-primary-dark-blue: #051A28; /* خلفية داكنة جداً (قريب من الأزرق النفطي الغامق) */
     --color-accent-blue: #106A9F; /* أزرق مميز للأزرار والعناوين */
     --color-text-light: #E0E6EB; /* لون نص فاتح ومريح للعين */
@@ -12,7 +12,25 @@
     --color-button-hover: #147CBF; /* لون الأزرار عند المرور عليها بالماوس */
     --color-button-clear: #CC703C; /* لون مميز لزر المسح */
     --color-border: #2C4A6B; /* لون للحدود */
+    --color-result-value: #63B8FF; /* لون أزرق فاتح مميز للنتائج */
 }
+
+/* Light Mode specific colors */
+body.light-mode {
+    --color-primary-dark-blue: #F0F4F8; /* خلفية فاتحة جداً */
+    --color-accent-blue: #005691; /* أزرق غامق للأزرار والعناوين */
+    --color-text-light: #333333; /* لون نص داكن */
+    --color-text-muted: #555555; /* لون نص رمادي داكن للنصوص الثانوية */
+    --color-background-light: #FFFFFF; /* لون أفتح للعناصر البارزة */
+    --color-gradient-start: #E0E6EB;
+    --color-gradient-end: #F0F4F8;
+    --color-error: #CC0000; /* أحمر داكن للأخطاء */
+    --color-button-hover: #007bb5; /* أزرق أغمق للهوفر */
+    --color-button-clear: #E67E22; /* برتقالي للزر المسح */
+    --color-border: #D1D9E0; /* لون أفتح للحدود */
+    --color-result-value: #007BFF; /* أزرق متوسط للنتائج */
+}
+
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,6 +41,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* لجعل الفوتر يلتصق بالأسفل */
+    transition: background-color 0.3s ease, color 0.3s ease; /* إضافة انتقال سلس */
 }
 
 .main-container {
@@ -34,6 +53,7 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* ظل أكثر بروزاً */
     flex-grow: 1; /* لجعل المحتوى يملأ المساحة */
     border: 1px solid var(--color-border); /* إضافة حد خفيف */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .main-title {
@@ -42,6 +62,7 @@ body {
     font-size: 2.8em; /* تكبير حجم الخط */
     margin-bottom: 10px; /* تقليل الهامش السفلي */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* ظل خفيف للنص */
+    transition: color 0.3s ease;
 }
 
 /* تنسيقات جديدة للSubtitle */
@@ -51,6 +72,7 @@ body {
     font-size: 1.2em;
     margin-bottom: 40px; /* زيادة المسافة بعد المقدمة */
     line-height: 1.5;
+    transition: color 0.3s ease;
 }
 
 .menu-buttons-layout {
@@ -70,7 +92,7 @@ body {
     cursor: pointer;
     font-size: 1.3em; /* تكبير حجم الخط */
     font-weight: 600; /* جعل الخط أثقل */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* إضافة انتقال للتحول */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* إضافة انتقال للتحول */
     display: flex; /* لترتيب الأيقونة والنص */
     align-items: center; /* توسيط عمودي */
     justify-content: center; /* توسيط أفقي */
@@ -96,6 +118,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     border: 1px solid var(--color-border);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .calculation-container h1 {
@@ -105,6 +128,7 @@ body {
     margin-bottom: 20px;
     border-bottom: 2px solid var(--color-border); /* خط تحت العنوان */
     padding-bottom: 10px;
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 /* تنسيق جديد لشرح الحاسبة */
@@ -114,6 +138,7 @@ body {
     font-size: 1.0em;
     margin-bottom: 30px;
     line-height: 1.4;
+    transition: color 0.3s ease;
 }
 
 .input-group {
@@ -127,6 +152,7 @@ body {
     margin-bottom: 8px;
     font-size: 1.1em;
     color: var(--color-text-light);
+    transition: color 0.3s ease;
 }
 
 .input-group input[type="number"],
@@ -139,11 +165,13 @@ body {
     color: var(--color-text-light);
     font-size: 1.1em;
     box-sizing: border-box; /* لضمان أن البادينغ لا يزيد العرض الكلي */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .input-group input[type="number"]::placeholder,
 .input-group input[type="text"]::placeholder {
     color: var(--color-text-muted); /* لون الفلاتر */
+    transition: color 0.3s ease;
 }
 
 .button-group {
@@ -161,7 +189,7 @@ body {
     cursor: pointer;
     font-size: 1.1em;
     font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -195,18 +223,21 @@ body {
     color: var(--color-text-light);
     text-align: center;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* ظل داخلي */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .result-box p {
     margin: 0;
     padding: 5px 0;
     color: var(--color-text-light); /* لضمان لون نص صحيح */
+    transition: color 0.3s ease;
 }
 
 .result-box span.value {
     font-weight: bold;
-    color: #63B8FF; /* لون أزرق فاتح مميز للنتائج */
+    color: var(--color-result-value); /* لون أزرق فاتح مميز للنتائج */
     font-size: 1.3em;
+    transition: color 0.3s ease;
 }
 
 .error-message {
@@ -214,6 +245,7 @@ body {
     text-align: center;
     margin-top: 15px;
     font-weight: bold;
+    transition: color 0.3s ease;
 }
 
 .back-button-container {
@@ -229,7 +261,7 @@ body {
     border-radius: 8px;
     text-decoration: none;
     font-size: 1.1em;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -245,6 +277,7 @@ body {
     text-align: right; /* تم تعديله ليتناسب مع اللغة العربية */
     margin-bottom: 20px;
     color: var(--color-text-light); /* لون النص */
+    transition: color 0.3s ease;
 }
 
 .info-content h3 {
@@ -254,6 +287,7 @@ body {
     margin-bottom: 10px;
     font-weight: bold;
     text-align: right; /* تم تعديله ليتناسب مع اللغة العربية */
+    transition: color 0.3s ease;
 }
 
 .info-content ul {
@@ -277,10 +311,11 @@ body {
     width: 100%;
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); /* ظل أقوى */
     margin-top: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .footer-links a {
-    color: #63B8FF; /* لون أزرق للروابط */
+    color: var(--color-result-value); /* لون أزرق للروابط */
     text-decoration: none;
     margin: 0 15px; /* زيادة المسافة بين الروابط */
     font-size: 0.95em; /* تكبير الخط قليلاً */
@@ -288,7 +323,7 @@ body {
 }
 
 .footer-links a:hover {
-    color: #99D9FF;
+    color: #99D9FF; /* لون أفتح للهوفر */
     text-decoration: underline;
 }
 
@@ -296,18 +331,22 @@ body {
     margin-top: 10px;
     font-size: 0.85em; /* تكبير الخط قليلاً */
     color: var(--color-text-muted);
-}/* Social Links in About Page */
+    transition: color 0.3s ease;
+}
+/* Social Links in About Page */
 .social-links-about {
     margin-top: 25px;
     padding-top: 15px;
     border-top: 1px solid var(--color-border);
     text-align: center;
+    transition: border-color 0.3s ease;
 }
 
 .social-links-about p {
     color: var(--color-text-light);
     margin-bottom: 10px;
     font-size: 1.1em;
+    transition: color 0.3s ease;
 }
 
 .social-links-about a {
@@ -325,4 +364,182 @@ body {
 
 .social-links-about i {
     margin-left: 8px; /* مسافة بين الأيقونة والنص */
+}
+
+/* Styles for the mode toggle button */
+.mode-toggle-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-accent-blue);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+.mode-toggle-button:hover {
+    background-color: var(--color-button-hover);
+    transform: scale(1.05);
+}
+
+.mode-toggle-button .fa-sun, .mode-toggle-button .fa-moon {
+    transition: opacity 0.3s ease;
+}
+
+.mode-toggle-button .fa-moon {
+    display: none; /* Hide moon icon by default in dark mode */
+}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetroCalc - Petroleum Engineering Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
+        <i class="fas fa-sun"></i> <i class="fas fa-moon"></i> </button>
+
+    <div class="main-container">
+        <h1 class="main-title">Welcome to PetroCalc</h1>
+        <p class="subtitle">Your comprehensive hub for petroleum engineering calculations, information, and resources.</p>
+
+        <div class="menu-buttons-layout">
+            <button class="menu-button" onclick="window.location.href='calculators-hub.html'"><i class="fas fa-calculator"></i> Calculators</button>
+            <button class="menu-button" onclick="window.location.href='information.html'"><i class="fas fa-lightbulb"></i> Information & Concepts</button>
+            <button class="menu-button" onclick="window.location.href='resources.html'"><i class="fas fa-book"></i> Resources & References</button>
+            <button class="menu-button" onclick="window.location.href='videos.html'"><i class="fas fa-video"></i> Educational Videos</button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="about.html">About Us</a> |
+                <a href="contact.html">Contact Us</a> |
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+            <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="js/calculations.js"></script>
+</body>
+</html>
+body.light-mode .mode-toggle-button .fa-sun {
+    display: none; /* Hide sun icon in light mode */
+}
+
+body.light-mode .mode-toggle-button .fa-moon {
+    display: inline-block; /* Show moon icon in light mode */
+}/* General Button Styling for Calculation Pages */
+.calc-button,
+.clear-button {
+    padding: 12px 25px;
+    margin: 15px 10px 5px 0; /* Adjusted margin for better spacing */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em; /* Slightly larger font */
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    display: inline-block; /* Ensure buttons are side-by-side if needed */
+    width: auto; /* Allow button to size to content */
+    min-width: 150px; /* Minimum width for consistency */
+}
+
+.calc-button {
+    background-color: var(--color-accent-blue); /* لون الزر الأساسي للحسابات */
+    color: var(--color-text-light);
+}
+
+.calc-button:hover {
+    background-color: var(--color-button-hover); /* لون أغمق عند التمرير */
+    transform: translateY(-2px); /* تأثير رفع بسيط */
+}
+
+.calc-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.clear-button {
+    background-color: var(--color-button-clear); /* لون زر المسح البرتقالي */
+    color: var(--color-text-light);
+}
+
+.clear-button:hover {
+    background-color: #A05C31; /* لون أغمق قليلاً لزر المسح */
+    transform: translateY(-2px);
+}
+
+.clear-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark/Light Mode Toggle Button Specific Styles */
+.mode-toggle-button {
+    position: fixed; /* Fixed position on the screen */
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-background-light); /* Background from theme */
+    color: var(--color-text-light); /* Icon color from theme */
+    border: 1px solid var(--color-border);
+    border-radius: 50%; /* Make it circular */
+    width: 45px; /* Size of the button */
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.3em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 1000; /* Ensure it's above other content */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.mode-toggle-button:hover {
+    background-color: var(--color-button-hover);
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.mode-toggle-button i {
+    display: none; /* Hide both icons by default, controlled by JS */
+}
+
+.mode-toggle-button i.fas.fa-sun {
+    color: #FFD700; /* Sun icon color */
+}
+
+.mode-toggle-button i.fas.fa-moon {
+    color: #CCCCFF; /* Moon icon color */
+}
+
+/* Ensure one icon is visible based on theme through JS */
+body.light-theme .mode-toggle-button .fa-moon {
+    display: inline-block;
+}
+
+body.dark-theme .mode-toggle-button .fa-sun {
+    display: inline-block;
+}
+
+/* If the icons are not explicitly hidden by JS, this makes sure only one is visible */
+body.light-theme .mode-toggle-button .fa-sun {
+    display: none;
+}
+body.dark-theme .mode-toggle-button .fa-moon {
+    display: none;
 }

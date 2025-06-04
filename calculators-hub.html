@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetroCalc - Petroleum Engineering Calculator</title>
+    <title>PetroCalc - All Calculators</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
@@ -14,27 +14,30 @@
     </button>
 
     <div class="main-container">
-        <h1 class="main-title">Welcome to PetroCalc</h1>
-        <p class="subtitle">Your companion for quick and accurate petroleum engineering calculations.</p>
+        <h1 class="main-title">PetroCalc Calculators</h1>
+        <p class="subtitle">Select a category of petroleum engineering calculations below:</p>
 
         <div class="menu-buttons-layout">
             <button class="menu-button" onclick="window.location.href='reservoir.html'"><i class="fas fa-oil-well"></i> Reservoir Calculations</button>
             <button class="menu-button" onclick="window.location.href='drilling.html'"><i class="fas fa-hammer"></i> Drilling Calculations</button>
             <button class="menu-button" onclick="window.location.href='production.html'"><i class="fas fa-pump"></i> Production Calculations</button>
             <button class="menu-button" onclick="window.location.href='reserves.html'"><i class="fas fa-cubes"></i> Reserves</button>
-            <button class="menu-button" onclick="window.location.href='information.html'"><i class="fas fa-info-circle"></i> Information & Concepts</button>
-            <button class="menu-button" onclick="window.location.href='resources.html'"><i class="fas fa-book"></i> Resources & References</button>
-            <button class="menu-button" onclick="window.location.href='videos.html'"><i class="fas fa-video"></i> Educational Videos</button>
+            <button class="menu-button" onclick="window.location.href='general.html'"><i class="fas fa-lightbulb"></i> General Petroleum Aspects</button>
+            <button class="menu-button" onclick="window.location.href='fundamentals.html'"><i class="fas fa-exchange-alt"></i> Fundamentals & Conversions</button>
             </div>
+
+        <div class="back-button-container">
+            <a href="index.html">العودة إلى الصفحة الرئيسية</a>
         </div>
+    </div>
 
     <footer class="footer">
         <div class="footer-links">
-            <a href="about.html">About Us</a> |
-            <a href="contact.html">Contact Us</a> |
-            <a href="privacy.html">Privacy Policy</a>
+            <a href="about.html">من نحن</a> |
+            <a href="contact.html">اتصل بنا</a> |
+            <a href="privacy.html">سياسة الخصوصية</a>
         </div>
-        <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
+        <p>&copy; 2025 PetroCalc Web. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script src="js/calculations.js"></script>

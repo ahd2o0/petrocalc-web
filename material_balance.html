@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetroCalc - Material Balance (Basic)</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="main-container">
+        <h1 class="main-title">Material Balance (Basic)</h1>
+        <p class="subtitle">Calculate the Total Fluid Expansion Factor for an undersaturated oil reservoir.</p>
+
+        <div class="calculation-section">
+            <h2 class="section-title">Total Fluid Expansion Factor (Et)</h2>
+            <div class="input-group">
+                <label for="bo">Current Oil FVF (Bo) (Rbbl/STB):</label>
+                <input type="number" id="bo" placeholder="e.g., 1.25">
+            </div>
+            <div class="input-group">
+                <label for="boi">Initial Oil FVF (Boi) (Rbbl/STB):</label>
+                <input type="number" id="boi" placeholder="e.g., 1.20">
+            </div>
+            <div class="input-group">
+                <label for="rsi">Initial Solution GOR (Rsi) (scf/STB):</label>
+                <input type="number" id="rsi" placeholder="e.g., 300">
+            </div>
+            <div class="input-group">
+                <label for="rs">Current Solution GOR (Rs) (scf/STB):</label>
+                <input type="number" id="rs" placeholder="e.g., 280">
+            </div>
+            <div class="input-group">
+                <label for="bg">Gas FVF (Bg) (Rbbl/scf):</label>
+                <input type="number" id="bg" placeholder="e.g., 0.005">
+            </div>
+            <button id="calcButton" class="calc-button">Calculate Et</button>
+            <button id="clearButton" class="clear-button">Clear Fields</button>
+            <div class="result-area" id="result">Results will appear here.</div>
+        </div>
+
+        <div class="back-button-container">
+            <a href="#" onclick="history.back(); return false;">Back</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About Us</a> |
+            <a href="contact.html">Contact Us</a> |
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
+    </footer>
+
+    <script src="js/calculations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCalcPage(calcMaterialBalanceOOIP, ['bo', 'boi', 'rsi', 'rs', 'bg']);
+        });
+    </script>
+</body>
+</html>

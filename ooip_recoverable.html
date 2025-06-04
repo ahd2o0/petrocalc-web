@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetroCalc - OOIP & Recoverable Reserves</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="main-container">
+        <h1 class="main-title">Original Oil In Place (OOIP) & Recoverable Reserves</h1>
+        <p class="subtitle">Calculate the initial oil in place and estimated recoverable reserves.</p>
+
+        <div class="calculation-section">
+            <h2 class="section-title">OOIP Calculation (Volumetric Method)</h2>
+            <div class="input-group">
+                <label for="area">Area (Acres):</label>
+                <input type="number" id="area" placeholder="e.g., 640">
+            </div>
+            <div class="input-group">
+                <label for="h">Net Pay Thickness (ft):</label>
+                <input type="number" id="h" placeholder="e.g., 50">
+            </div>
+            <div class="input-group">
+                <label for="phi">Porosity (fraction):</label>
+                <input type="number" id="phi" placeholder="e.g., 0.20">
+            </div>
+            <div class="input-group">
+                <label for="sw">Water Saturation (fraction):</label>
+                <input type="number" id="sw" placeholder="e.e.g, 0.30">
+            </div>
+            <div class="input-group">
+                <label for="bo">Oil FVF (Bo) (Rbbl/STB):</label>
+                <input type="number" id="bo" placeholder="e.g., 1.25">
+            </div>
+            <button id="calcOoipButton" class="calc-button">Calculate OOIP</button>
+            <div class="result-area" id="ooipResult">Results will appear here.</div>
+
+            <h2 class="section-title">Recoverable Reserves Calculation</h2>
+            <div class="input-group">
+                <label for="ooip_input">OOIP (STB) (from above or manual):</label>
+                <input type="number" id="ooip_input" placeholder="e.g., 1000000">
+            </div>
+            <div class="input-group">
+                <label for="rf">Recovery Factor (RF) (fraction):</label>
+                <input type="number" id="rf" placeholder="e.g., 0.35">
+            </div>
+            <button id="calcRecoverableButton" class="calc-button">Calculate Recoverable</button>
+            <div class="result-area" id="recoverableResult">Results will appear here.</div>
+
+            <button id="clearButton" class="clear-button">Clear Fields</button>
+        </div>
+
+        <div class="back-button-container">
+            <a href="#" onclick="history.back(); return false;">Back</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About Us</a> |
+            <a href="contact.html">Contact Us</a> |
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
+    </footer>
+
+    <script src="js/calculations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // OOIP Calculation
+            document.getElementById('calcOoipButton').addEventListener('click', () => {
+                const area = parseFloat(document.getElementById('area').value);
+                const h = parseFloat(document.getElementById('h').value);
+                const phi = parseFloat(document.getElementById('phi').value);
+                const sw = parseFloat(document.getElementById('sw').value);
+                const bo = parseFloat(document.getElementById('bo').value);
+                document.getElementById('ooipResult').textContent = calcOoip(area, h, phi, sw, bo);
+                // Optionally auto-populate recoverable OOIP input
+                const ooipValue = parseFloat(document.getElementById('ooipResult').textContent.split(':')[1]);
+                if (!isNaN(ooipValue)) {
+                    document.getElementById('ooip_input').value = ooipValue;
+                }
+            });
+
+            // Recoverable Reserves Calculation
+            document.getElementById('calcRecoverableButton').addEventListener('click', () => {
+                const ooip = parseFloat(document.getElementById('ooip_input').value);
+                const rf = parseFloat(document.getElementById('rf').value);
+                document.getElementById('recoverableResult').textContent = calcRecoverable(ooip, rf);
+            });
+
+            // Clear All Fields
+            document.getElementById('clearButton').addEventListener('click', () => {
+                document.getElementById('area').value = '';
+                document.getElementById('h').value = '';
+                document.getElementById('phi').value = '';
+                document.getElementById('sw').value = '';
+                document.getElementById('bo').value = '';
+                document.getElementById('ooipResult').textContent = 'Results will appear here.';
+                document.getElementById('ooip_input').value = '';
+                document.getElementById('rf').value = '';
+                document.getElementById('recoverableResult').textContent = 'Results will appear here.';
+            });
+        });
+    </script>
+</body>
+</html>

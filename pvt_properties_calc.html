@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetroCalc - PVT Properties</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="main-container">
+        <h1 class="main-title">PVT Properties Calculations</h1>
+        <p class="subtitle">Estimate key fluid properties using common correlations.</p>
+
+        <div class="calculation-section">
+            <h2 class="section-title">Oil Formation Volume Factor (Bo)</h2>
+            <div class="input-group">
+                <label for="rs_bo">Solution GOR (Rs) (scf/STB):</label>
+                <input type="number" id="rs_bo" placeholder="e.g., 300">
+            </div>
+            <div class="input-group">
+                <label for="sgGas_bo">Gas Specific Gravity (SG):</label>
+                <input type="number" id="sgGas_bo" placeholder="e.g., 0.65">
+            </div>
+            <div class="input-group">
+                <label for="apiGravity_bo">Oil API Gravity (°API):</label>
+                <input type="number" id="apiGravity_bo" placeholder="e.g., 35">
+            </div>
+            <div class="input-group">
+                <label for="tempF_bo">Temperature (°F):</label>
+                <input type="number" id="tempF_bo" placeholder="e.g., 180">
+            </div>
+            <button id="calcBoButton" class="calc-button">Calculate Bo</button>
+            <div class="result-area" id="boResult">Results will appear here.</div>
+
+            <h2 class="section-title">Gas Formation Volume Factor (Bg)</h2>
+            <div class="input-group">
+                <label for="pressure_bg">Pressure (psi):</label>
+                <input type="number" id="pressure_bg" placeholder="e.g., 2000">
+            </div>
+            <div class="input-group">
+                <label for="tempR_bg">Temperature (°R):</label>
+                <input type="number" id="tempR_bg" placeholder="e.g., 640 (180F + 460)">
+            </div>
+            <div class="input-group">
+                <label for="zFactor_bg">Z-Factor:</label>
+                <input type="number" id="zFactor_bg" placeholder="e.g., 0.85">
+            </div>
+            <button id="calcBgButton" class="calc-button">Calculate Bg</button>
+            <div class="result-area" id="bgResult">Results will appear here.</div>
+
+            <h2 class="section-title">Solution Gas-Oil Ratio (Rs) at Saturation Pressure</h2>
+            <div class="input-group">
+                <label for="pressure_rs">Pressure (psi):</label>
+                <input type="number" id="pressure_rs" placeholder="e.g., 2500">
+            </div>
+            <div class="input-group">
+                <label for="tempF_rs">Temperature (°F):</label>
+                <input type="number" id="tempF_rs" placeholder="e.g., 180">
+            </div>
+            <div class="input-group">
+                <label for="apiGravity_rs">Oil API Gravity (°API):</label>
+                <input type="number" id="apiGravity_rs" placeholder="e.g., 35">
+            </div>
+            <div class="input-group">
+                <label for="sgGas_rs">Gas Specific Gravity (SG):</label>
+                <input type="number" id="sgGas_rs" placeholder="e.g., 0.65">
+            </div>
+            <button id="calcRsButton" class="calc-button">Calculate Rs</button>
+            <div class="result-area" id="rsResult">Results will appear here.</div>
+
+            <h2 class="section-title">Estimated Oil Viscosity (Simplified)</h2>
+            <div class="input-group">
+                <label for="apiGravity_mu">Oil API Gravity (°API):</label>
+                <input type="number" id="apiGravity_mu" placeholder="e.g., 35">
+            </div>
+            <div class="input-group">
+                <label for="tempF_mu">Temperature (°F):</label>
+                <input type="number" id="tempF_mu" placeholder="e.g., 180">
+            </div>
+            <div class="input-group">
+                <label for="rs_mu">Solution GOR (Rs) (scf/STB):</label>
+                <input type="number" id="rs_mu" placeholder="e.g., 300">
+            </div>
+            <div class="input-group">
+                <label for="bg_mu">Gas FVF (Bg) (Rbbl/scf):</label>
+                <input type="number" id="bg_mu" placeholder="e.g., 0.005">
+            </div>
+             <div class="input-group">
+                <label for="pressure_mu">Pressure (psi):</label>
+                <input type="number" id="pressure_mu" placeholder="e.g., 2000">
+            </div>
+            <button id="calcMuButton" class="calc-button">Calculate Viscosity</button>
+            <div class="result-area" id="muResult">Results will appear here.</div>
+
+            <button id="clearButton" class="clear-button">Clear All Fields</button>
+        </div>
+
+        <div class="back-button-container">
+            <a href="#" onclick="history.back(); return false;">Back</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">About Us</a> |
+            <a href="contact.html">Contact Us</a> |
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
+    </footer>
+
+    <script src="js/calculations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Individual button listeners for PVT properties
+            document.getElementById('calcBoButton').addEventListener('click', () => {
+                const rs = parseFloat(document.getElementById('rs_bo').value);
+                const sgGas = parseFloat(document.getElementById('sgGas_bo').value);
+                const apiGravity = parseFloat(document.getElementById('apiGravity_bo').value);
+                const tempF = parseFloat(document.getElementById('tempF_bo').value);
+                document.getElementById('boResult').textContent = calcOilFVF(rs, sgGas, apiGravity, tempF);
+            });
+
+            document.getElementById('calcBgButton').addEventListener('click', () => {
+                const pressure = parseFloat(document.getElementById('pressure_bg').value);
+                const tempR = parseFloat(document.getElementById('tempR_bg').value);
+                const zFactor = parseFloat(document.getElementById('zFactor_bg').value);
+                document.getElementById('bgResult').textContent = calcGasFVF(pressure, tempR, zFactor);
+            });
+
+            document.getElementById('calcRsButton').addEventListener('click', () => {
+                const pressure = parseFloat(document.getElementById('pressure_rs').value);
+                const tempF = parseFloat(document.getElementById('tempF_rs').value);
+                const apiGravity = parseFloat(document.getElementById('apiGravity_rs').value);
+                const sgGas = parseFloat(document.getElementById('sgGas_rs').value);
+                document.getElementById('rsResult').textContent = calcSolutionGOR(pressure, tempF, apiGravity, sgGas);
+            });
+
+            document.getElementById('calcMuButton').addEventListener('click', () => {
+                const apiGravity = parseFloat(document.getElementById('apiGravity_mu').value);
+                const tempF = parseFloat(document.getElementById('tempF_mu').value);
+                const rs = parseFloat(document.getElementById('rs_mu').value);
+                const bg = parseFloat(document.getElementById('bg_mu').value);
+                const pressure = parseFloat(document.getElementById('pressure_mu').value);
+                document.getElementById('muResult').textContent = calcOilViscosity(apiGravity, tempF, rs, bg, pressure);
+            });
+
+            // Clear All Fields
+            document.getElementById('clearButton').addEventListener('click', () => {
+                document.getElementById('rs_bo').value = '';
+                document.getElementById('sgGas_bo').value = '';
+                document.getElementById('apiGravity_bo').value = '';
+                document.getElementById('tempF_bo').value = '';
+                document.getElementById('boResult').textContent = 'Results will appear here.';
+
+                document.getElementById('pressure_bg').value = '';
+                document.getElementById('tempR_bg').value = '';
+                document.getElementById('zFactor_bg').value = '';
+                document.getElementById('bgResult').textContent = 'Results will appear here.';
+
+                document.getElementById('pressure_rs').value = '';
+                document.getElementById('tempF_rs').value = '';
+                document.getElementById('apiGravity_rs').value = '';
+                document.getElementById('sgGas_rs').value = '';
+                document.getElementById('rsResult').textContent = 'Results will appear here.';
+
+                document.getElementById('apiGravity_mu').value = '';
+                document.getElementById('tempF_mu').value = '';
+                document.getElementById('rs_mu').value = '';
+                document.getElementById('bg_mu').value = '';
+                document.getElementById('pressure_mu').value = '';
+                document.getElementById('muResult').textContent = 'Results will appear here.';
+            });
+        });
+    </script>
+</body>
+</html>
