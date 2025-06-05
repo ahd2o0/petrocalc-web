@@ -14,10 +14,11 @@
     --color-border: #2C4A6B; /* لون للحدود */
     --color-result-value: #63B8FF; /* لون أزرق فاتح مميز للنتائج */
 
-    /* === المتغيرات المضافة / المعدلة لضبط شكل المربعات === */
+    /* === المتغيرات المضافة / المعدلة لضبط شكل المربعات في الوضع الليلي === */
     --input-bg: #051A28; /* خلفية حقول الإدخال - تبقى داكنة في الوضع الليلي */
     --box-shadow-color-dark: rgba(0, 0, 0, 0.4); /* ظل للحاويات في الوضع الليلي (أكثر بروزاً) */
     --box-shadow-color-light: rgba(0, 0, 0, 0.2); /* ظل للأزرار وغيرها (أخف) */
+    --box-shadow-inset: rgba(0, 0, 0, 0.2); /* ظل داخلي لصندوق النتائج */
 }
 
 /* Light Mode specific colors */
@@ -39,6 +40,7 @@ body.light-mode {
     --input-bg: #FFFFFF; /* خلفية حقول الإدخال في الوضع الفاتح */
     --box-shadow-color-dark: rgba(0, 0, 0, 0.2); /* ظل للحاويات في الوضع الفاتح (أخف) */
     --box-shadow-color-light: rgba(0, 0, 0, 0.1); /* ظل للأزرار وغيرها (أخف جداً) */
+    --box-shadow-inset: rgba(0, 0, 0, 0.1); /* ظل داخلي لصندوق النتائج */
 }
 
 
@@ -54,13 +56,23 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease; /* إضافة انتقال سلس */
 }
 
+/* === تم تغيير light-theme إلى light-mode ليتوافق مع style.css === */
+body.dark-theme { /* هذا الكلاس يطبقه JavaScript */
+    /* لا حاجة لتعريف الألوان هنا مجدداً لأنها معرفة في :root كافتراضيات */
+}
+
+body.light-theme { /* هذا الكلاس يطبقه JavaScript */
+    /* يتم تطبيق المتغيرات الخاصة بالوضع الفاتح من body.light-mode */
+}
+
+
 .main-container {
     max-width: 900px; /* زيادة قليلاً لجعل المحتوى أوسع */
     margin: 40px auto; /* زيادة الهامش العلوي */
     padding: 30px; /* زيادة البادينغ */
     background-color: var(--color-background-light); /* استخدام لون خلفية أغمق للكونتينر */
     border-radius: 12px; /* زوايا أكثر استدارة */
-    box-shadow: 0 8px 20px var(--box-shadow-color-dark); /* ظل أكثر بروزاً */
+    box-shadow: 0 8px 20px var(--box-shadow-color-dark); /* ظل أكثر بروزاً*/
     flex-grow: 1; /* لجعل المحتوى يملأ المساحة */
     border: 1px solid var(--color-border); /* إضافة حد خفيف */
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -107,7 +119,7 @@ body {
     align-items: center; /* توسيط عمودي */
     justify-content: center; /* توسيط أفقي */
     gap: 10px; /* مسافة بين الأيقونة والنص */
-    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* ظل خفيف للأزرار */
+    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* ظل خفيف للأزرار*/
 }
 
 .menu-button i { /* تنسيقات الأيقونات */
@@ -120,18 +132,19 @@ body {
 }
 
 /* Styles for detail calculation pages */
-.calculation-container {
+/* === تم تغيير calculation-section إلى calculation-container لتوحيد التنسيق === */
+.calculation-container, .calculation-section { /* أضفت .calculation-section هنا */
     max-width: 700px;
     margin: 30px auto;
     padding: 25px;
-    background-color: var(--color-background-light); /* يستخدم لون الخلفية الأفتح للحاويات */
-    border-radius: 12px;
-    box-shadow: 0 6px 15px var(--box-shadow-color-dark); /* يستخدم الظل الداكن للمربعات الكبيرة */
+    background-color: var(--color-background-light); /* يستخدم لون الخلفية الأفتح للحاويات*/
+    border-radius: 12px; /* */
+    box-shadow: 0 6px 15px var(--box-shadow-color-dark); /* يستخدم الظل الداكن للمربعات الكبيرة*/
     border: 1px solid var(--color-border);
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.calculation-container h1 {
+.calculation-container h1, .calculation-section h2.section-title { /* أضفت .calculation-section h2.section-title هنا */
     text-align: center;
     color: var(--color-accent-blue);
     font-size: 2.2em;
@@ -171,8 +184,8 @@ body {
     width: 100%;
     padding: 12px;
     border: 1px solid var(--color-border);
-    border-radius: 8px;
-    background-color: var(--input-bg); /* يستخدم متغير --input-bg لخلفية حقول الإدخال */
+    border-radius: 8px; /* توحيد استدارة الحواف*/
+    background-color: var(--input-bg); /* يستخدم متغير --input-bg لخلفية حقول الإدخال*/
     color: var(--color-text-light);
     font-size: 1.1em;
     box-sizing: border-box;
@@ -185,15 +198,10 @@ body {
     transition: color 0.3s ease;
 }
 
-.button-group {
-    display: flex;
-    justify-content: space-around;
-    gap: 15px;
-    margin-top: 25px;
-}
-
-.button-group button {
-    flex: 1;
+/* === تم إضافة تنسيق للأزرار المشابهة لـ button-group لكن بكلاسات منفصلة === */
+.calc-button, .clear-button { /* تنسيقات الأزرار الفردية */
+    display: block; /* لضمان أخذ العرض الكامل */
+    width: 100%; /* لضمان أخذ العرض الكامل */
     padding: 15px 20px;
     border: none;
     border-radius: 8px;
@@ -201,58 +209,81 @@ body {
     font-size: 1.1em;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* يستخدم الظل الخفيف للأزرار */
+    box-shadow: 0 4px 10px var(--box-shadow-color-light);
+    margin-top: 15px; /* لإعطاء مسافة بين الأزرار وحقول الإدخال */
 }
 
-.button-group button.calculate {
+/* لتجميع الأزرار معاً في صف واحد */
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+/* لإعطاء تنسيقات محددة لأزرار المجموعة */
+.button-group button {
+    flex: 1; /* لجعل الأزرار تتوزع بالتساوي */
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px var(--box-shadow-color-light);
+}
+
+.button-group button.calculate, .calc-button { /* أضفت .calc-button هنا */
     background-color: var(--color-accent-blue);
     color: white;
 }
 
-.button-group button.calculate:hover {
+.button-group button.calculate:hover, .calc-button:hover { /* أضفت .calc-button:hover هنا */
     background-color: var(--color-button-hover);
     transform: translateY(-3px);
 }
 
-.button-group button.clear {
+.button-group button.clear, .clear-button { /* أضفت .clear-button هنا */
     background-color: var(--color-button-clear);
     color: white;
 }
 
-.button-group button.clear:hover {
+.button-group button.clear:hover, .clear-button:hover { /* أضفت .clear-button:hover هنا */
     background-color: #A6572A;
     transform: translateY(-3px);
 }
 
-.result-box {
-    background-color: var(--color-background-light); /* يستخدم لون الخلفية الأفتح لصندوق النتائج */
+/* === تم إضافة .result-area ليتوافق مع HTML === */
+.result-box, .result-area { /* أضفت .result-area هنا */
+    background-color: var(--color-background-light); /* يستخدم لون الخلفية الأفتح لصندوق النتائج*/
     border: 1px solid var(--color-border);
-    border-radius: 12px; /* زوايا مستديرة أكثر */
+    border-radius: 12px; /* زوايا مستديرة أكثر*/
     padding: 20px;
     margin-top: 30px;
     font-size: 1.2em;
     color: var(--color-text-light);
     text-align: center;
-    box-shadow: 0 4px 15px var(--box-shadow-color-dark); /* ظل خارجي للحاويات */
+    box-shadow: 0 4px 15px var(--box-shadow-color-dark); /* ظل خارجي للحاويات*/
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .result-box p {
     margin: 0;
     padding: 5px 0;
-    color: var(--color-text-light);
+    color: var(--color-text-light); /* لضمان لون نص صحيح */
     transition: color 0.3s ease;
 }
 
 .result-box span.value {
     font-weight: bold;
-    color: var(--color-result-value);
+    color: var(--color-result-value); /* لون أزرق فاتح مميز للنتائج */
     font-size: 1.3em;
     transition: color 0.3s ease;
 }
 
 .error-message {
-    color: var(--color-error); /* استخدام لون الخطأ */
+    color: var(--color-error); /* استخدام لون الخطأ*/
     text-align: center;
     margin-top: 15px;
     font-weight: bold;
@@ -266,14 +297,14 @@ body {
 
 .back-button-container a {
     display: inline-block;
-    background-color: var(--color-button-clear); /* يمكن استخدام نفس لون زر المسح أو لون آخر */
+    background-color: var(--color-button-clear); /* يمكن استخدام نفس لون زر المسح أو لون آخر*/
     color: white;
     padding: 12px 25px;
     border-radius: 8px;
     text-decoration: none;
     font-size: 1.1em;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* يستخدم الظل الخفيف للأزرار */
+    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* يستخدم الظل الخفيف للأزرار*/
 }
 
 .back-button-container a:hover {
@@ -313,20 +344,20 @@ body {
 
 /* Footer Styles */
 .footer {
-    background-color: var(--color-background-light); /* لون أغمق للفوتر */
+    background-color: var(--color-background-light); /* لون أغمق للفوتر*/
     color: var(--color-text-light);
     text-align: center;
     padding: 15px 0;
     position: relative;
     bottom: 0;
     width: 100%;
-    box-shadow: 0 -4px 10px var(--box-shadow-color-dark); /* ظل أقوى */
+    box-shadow: 0 -4px 10px var(--box-shadow-color-dark); /* ظل أقوى*/
     margin-top: 50px;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .footer-links a {
-    color: var(--color-result-value); /* لون أزرق للروابط */
+    color: var(--color-result-value); /* لون أزرق للروابط*/
     text-decoration: none;
     margin: 0 15px; /* زيادة المسافة بين الروابط */
     font-size: 0.95em; /* تكبير الخط قليلاً */
@@ -393,7 +424,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px var(--box-shadow-color-dark); /* يستخدم الظل الداكن */
+    box-shadow: 0 4px 10px var(--box-shadow-color-dark); /* يستخدم الظل الداكن*/
     z-index: 1000; /* Ensure it stays on top */
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
@@ -409,28 +440,30 @@ body {
 }
 
 /* --- IMPORTANT: Corrected Dark/Light Mode Icon Display Logic --- */
-body.light-theme .mode-toggle-button .fa-sun {
+/* تم تعديل هذا الجزء ليتوافق مع .light-mode في :root وليس body.light-theme */
+body.light-mode .mode-toggle-button .fa-sun {
     display: none; /* Hide sun icon in light mode */
 }
-body.light-theme .mode-toggle-button .fa-moon {
+body.light-mode .mode-toggle-button .fa-moon {
     display: inline-block; /* Show moon icon in light mode */
     color: var(--color-text-light); /* Ensure moon icon color changes */
 }
 
-body.dark-theme .mode-toggle-button .fa-moon {
-    display: none; /* Hide moon icon in dark mode */
+/* بما أن dark-mode هو الافتراضي، لا نحتاج لكلاس خاص به في body، بل يكفي أن يكون الكلاس غير موجود */
+body:not(.light-mode) .mode-toggle-button .fa-moon { /* يخفي القمر إذا لم يكن الوضع فاتحاً */
+    display: none;
 }
-body.dark-theme .mode-toggle-button .fa-sun {
-    display: inline-block; /* Show sun icon in dark mode */
+body:not(.light-mode) .mode-toggle-button .fa-sun { /* يظهر الشمس إذا لم يكن الوضع فاتحاً */
+    display: inline-block;
     color: #FFD700; /* Sun icon color (yellow) */
 }
 
 
 /* --- New styles for Video Links (from videos.html) --- */
 .info-section {
-    background-color: var(--color-background-light); /* Use background color from theme */
-    border-radius: 12px; /* زوايا مستديرة أكثر */
-    box-shadow: 0 4px 15px var(--box-shadow-color-dark); /* يستخدم الظل الداكن */
+    background-color: var(--color-background-light); /* Use background color from theme*/
+    border-radius: 12px; /* زوايا مستديرة أكثر*/
+    box-shadow: 0 4px 15px var(--box-shadow-color-dark); /* يستخدم الظل الداكن*/
     padding: 30px;
     margin-top: 30px;
     text-align: left; /* Align text to the left within this section */
@@ -480,7 +513,7 @@ body.dark-theme .mode-toggle-button .fa-sun {
     font-size: 1.1em;
     font-weight: 600;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* يستخدم الظل الخفيف للأزرار */
+    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* يستخدم الظل الخفيف للأزرار*/
     gap: 10px; /* Space between icon and text */
     min-width: 250px; /* Ensure button has a minimum width */
 }
@@ -516,29 +549,29 @@ body.dark-theme .mode-toggle-button .fa-sun {
         font-size: 1.1em;
         padding: 15px 20px;
     }
-    .calculation-container {
+    .calculation-container, .calculation-section { /* أضفت .calculation-section هنا */
         margin: 20px 10px;
         padding: 20px;
     }
-    .calculation-container h1 {
+    .calculation-container h1, .calculation-section h2.section-title { /* أضفت .calculation-section h2.section-title هنا */
         font-size: 1.8em;
     }
     .input-group label {
         font-size: 1em;
     }
-    .input-group input, .input-group select { /* أضفت select هنا للتأكد من تنسيقها أيضاً */
+    .input-group input, .input-group select { /* أضفت select هنا للتأكد من تنسيقها أيضاً*/
         font-size: 1em;
         padding: 10px;
     }
     .button-group {
         flex-direction: column; /* Stack buttons on small screens */
     }
-    .button-group button {
+    .button-group button, .calc-button, .clear-button { /* أضفت .calc-button, .clear-button هنا */
         font-size: 1em;
         padding: 12px 15px;
         min-width: unset; /* Remove min-width for stacking */
     }
-    .result-box {
+    .result-box, .result-area { /* أضفت .result-area هنا */
         font-size: 1.1em;
         padding: 15px;
     }
@@ -560,32 +593,35 @@ body.dark-theme .mode-toggle-button .fa-sun {
         padding: 12px 20px;
         min-width: unset; /* Allow button to shrink on small screens */
     }
-} /* نهاية @media (max-width: 768px) */
-
-/*
-    *** مهم جداً: هذه التنسيقات تم نقلها خارج استعلام الوسائط (@media)
-    *** لضمان تطبيقها على جميع أحجام الشاشات.
-*/
-.chart-display-box {
+}
+/* تنسيقات خاصة بحاوية الرسم البياني */
+.chart-container {
     width: 100%;
-    max-width: 700px; /* زيادة قليلاً ليتناسق مع calculation-container */
-    height: 400px;
+    max-width: 700px; /* يمكنك تعديل هذا لتناسب تصميمك */
+    height: 400px; /* لتحديد ارتفاع ثابت للكانفاس */
     margin: 20px auto;
-    background-color: var(--color-background-light); /* تم تغيير اللون ليتناسق مع result-box */
-    padding: 20px; /* زيادة البادينغ */
-    border-radius: 12px; /* زوايا مستديرة أكثر */
-    box-shadow: 0 6px 15px var(--box-shadow-color-dark); /* يستخدم الظل الداكن */
+    background-color: var(--color-background-light); /* يستخدم لون خلفية الحاويات وليس المدخلات*/
+    padding: 20px;
+    border-radius: 12px; /* توحيد الاستدارة*/
+    box-shadow: 0 6px 15px var(--box-shadow-color-dark); /* */
     border: 1px solid var(--color-border);
-    display: flex;
+    display: flex; /* لضمان أن الكانفاس يتمدد */
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* **هذه مهمة جداً لاحتواء الرسم البياني!** */
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.chart-display-box canvas {
+/* لجعل الكانفاس يملأ الحاوية قدر الإمكان */
+.chart-container canvas {
     max-width: 100%;
     max-height: 100%;
-    display: block; /* هذا يمكن أن يساعد في العرض */
+}
+
+/* تنسيق رسالة الخطأ */
+.error-message {
+    color: var(--color-error); /* */
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
 }
