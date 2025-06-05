@@ -353,50 +353,319 @@ function initializeCalcPage(calculationFunction, inputIds) {
         });
     }
 }
+// Global variable to hold the chart instance for easy destruction/redrawing
+let myChartInstance; 
 
+// Function to draw the line chart
+function drawLineChart() {
+    const xInput = document.getElementById('xValues');
+    const yInput = document.getElementById('yValues');
+    const chartError = document.getElementById('chartError');
+    const canvas = document.getElementById('myLineChart');
+    const xAxisName = document.getElementById('xAxisName').value || 'X-Axis'; // أضف هذه المتغيرات
+    const yAxisName = document.getElementById('yAxisName').value || 'Y-Axis'; // أضف هذه المتغيرات
+
+    // Clear previous error messages
+    chartError.style.display = 'none';
+    chartError.textContent = '';
+
+    // Parse input values from string to array of numbers
+    // Supports comma, Arabic comma, and space as delimiters
+    const xLabels = xInput.value.split(/[,،\s]+/).filter(Boolean).map(Number);
+    const yData = yInput.value.split(/[,،\s]+/).filter(Boolean).map(Number);
+
+    // Basic validation
+    if (xLabels.length === 0 || yData.length === 0) {
+        chartError.textContent = 'Please enter values for both X and Y axes.';
+        chartError.style.display = 'block';
+        if (myChartInstance) {
+            myChartInstance.destroy();
+            myChartInstance = null;
+        }
+        return;
+    }
+
+    if (xLabels.length !== yData.length) {
+        chartError.textContent = 'The number of X and Y axis values must be equal.';
+        chartError.style.display = 'block';
+        if (myChartInstance) {
+            myChartInstance.destroy();
+            myChartInstance = null;
+        }
+        return;
+    }
+
+    if (xLabels.some(isNaN) || yData.some(isNaN)) {
+        chartError.textContent = 'Please ensure all entered values are valid numbers.';
+        chartError.style.display = 'block';
+        if (myChartInstance) {
+            myChartInstance.destroy();
+            myChartInstance = null;
+        }
+        return;
+    }
+
+    // Destroy existing chart instance if it exists to avoid conflicts
+    if (myChartInstance) {
+        myChartInstance.destroy();
+    }
+
+    // Get the current theme to adjust chart colors
+    const body = document.body;
+    // تم التغيير من 'dark-mode' إلى 'dark-theme' لأننا نستخدم كلاسات شاملة (dark-theme, light-theme)
+    const isDarkMode = body.classList.contains('dark-theme');
+
+    // Define colors based on the current theme
+    // استخدام المتغيرات من CSS مباشرة
+    const textColor = isDarkMode ? getComputedStyle(document.documentElement).getPropertyValue('--color-text-light').trim() : getComputedStyle(document.documentElement).getPropertyValue('--color-text-light').trim();
+    const gridColor = isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent-blue').trim(); // استخدام --color-accent-blue
+    const backgroundColorFill = isDarkMode ? getComputedStyle(document.documentElement).getPropertyValue('--color-background-light').trim() : getComputedStyle(document.documentElement).getPropertyValue('--color-background-light').trim(); // لون الخلفية للكانفاس عند الحفظ
+    const datasetBackgroundColor = isDarkMode ? 'rgba(16, 106, 159, 0.2)' : 'rgba(0, 86, 145, 0.2)'; // شفافية للون --color-accent-blue
+
+    // Create the chart
+    const ctx = canvas.getContext('2d');
+    myChartInstance = new Chart(ctx, {
+        type: 'line', // Can be 'bar', 'scatter', etc.
+        data: {
+            labels: xLabels, // X-axis values
+            datasets: [{
+                label: `${yAxisName} vs. ${xAxisName}`, // تحديث التسمية ديناميكياً
+                data: yData, // Y-axis values
+                borderColor: borderColor,
+                backgroundColor: datasetBackgroundColor, // لون شفاف للمجموعة
+                borderWidth: 2,
+                pointBackgroundColor: borderColor,
+                pointBorderColor: textColor,
+                pointHoverBackgroundColor: textColor,
+                pointHoverBorderColor: borderColor,
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: xAxisName, // استخدام عنوان محور X المدخل
+                        color: textColor
+                    },
+                    ticks: {
+                        color: textColor
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: yAxisName, // استخدام عنوان محور Y المدخل
+                        color: textColor
+                    },
+                    ticks: {
+                        color: textColor
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                },
+                // *** هذا هو الجزء المهم الذي يجب إضافته أو التأكد من وجوده ***
+                beforeDraw: (chart) => {
+                    const ctx = chart.canvas.getContext('2d');
+                    ctx.save(); // حفظ حالة الكانفاس الحالية
+                    ctx.globalCompositeOperation = 'destination-over'; // وضع وضع الرسم ليرسم تحت العناصر الموجودة
+                    ctx.fillStyle = backgroundColorFill; // استخدام اللون الذي حددناه للخلفية
+                    ctx.fillRect(0, 0, chart.width, chart.height); // ملء الكانفاس باللون
+                    ctx.restore(); // استعادة حالة الكانفاس الأصلية
+                }
+            }
+        }
+    });
+}
+
+// Function to save the chart as an image
+function saveChartAsImage() {
+    if (myChartInstance) { // Ensure a chart exists
+        const canvas = document.getElementById('myLineChart'); 
+        // toDataURL will give you the image data
+        const imageDataURL = canvas.toDataURL('image/png'); 
+
+        // Create a temporary link element
+        const downloadLink = document.createElement('a');
+        downloadLink.href = imageDataURL;
+        downloadLink.download = 'petroleum_chart.png'; // Suggested filename for download
+        document.body.appendChild(downloadLink); 
+        downloadLink.click(); 
+        document.body.removeChild(downloadLink); 
+    } else {
+        alert("Please generate a chart first to save!"); 
+    }
+}
+
+
+// Event Listeners for the chart section
+document.addEventListener('DOMContentLoaded', () => {
+    const drawChartButton = document.getElementById('drawChartButton');
+    const clearChartButton = document.getElementById('clearChartButton');
+    const saveChartButton = document.getElementById('saveChartButton');
+    const xValuesInput = document.getElementById('xValues');
+    const yValuesInput = document.getElementById('yValues');
+    const chartError = document.getElementById('chartError');
+
+    if (drawChartButton) {
+        drawChartButton.addEventListener('click', drawLineChart);
+    }
+
+    if (clearChartButton) {
+        clearChartButton.addEventListener('click', () => {
+            xValuesInput.value = '';
+            yValuesInput.value = '';
+            chartError.style.display = 'none';
+            if (myChartInstance) {
+                myChartInstance.destroy(); // Remove the chart from canvas
+                myChartInstance = null; // Clear the instance
+            }
+        });
+    }
+
+    if (saveChartButton) {
+        saveChartButton.addEventListener('click', saveChartAsImage);
+    }
+
+    // Add event listener to redraw chart when theme changes
+    // This part should be integrated with your existing theme toggle logic
+    // Make sure your modeToggleButton is correctly handled elsewhere in the DOMContentLoaded
+    const modeToggleButton = document.getElementById('modeToggleButton');
+    if (modeToggleButton) {
+        modeToggleButton.addEventListener('click', () => {
+            // Give a small delay to ensure the theme class has updated on body
+            setTimeout(() => {
+                // If a chart instance exists, redraw it to apply new colors
+                if (myChartInstance) {
+                    // We need to re-parse inputs as drawLineChart uses current input values
+                    drawLineChart(); 
+                }
+            }, 100); 
+        });
+    }
+});
+
+// ********************************************
+// Dark/Light Mode Toggle Logic
+// (هذا الجزء يجب أن يكون موجوداً في ملفك كما تم تصحيحه مسبقاً)
+// لا تكرره هنا إذا كان موجوداً بالفعل.
+// تأكد من أنه يستخدم 'dark-mode' و 'light-mode' للكلاسات.
+// ********************************************
+/*
+document.addEventListener('DOMContentLoaded', () => {
+    const modeToggleButton = document.getElementById('modeToggleButton');
+    const body = document.body;
+
+    // Load theme preference from localStorage
+    const savedTheme = localStorage.getItem('theme'); 
+    if (savedTheme) {
+        body.classList.add(savedTheme);
+        updateToggleButtonIcon(savedTheme);
+    } else {
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark-mode');
+        updateToggleButtonIcon('dark-mode');
+    }
+
+    if (modeToggleButton) {
+        modeToggleButton.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light-mode');
+                updateToggleButtonIcon('light-mode');
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+                updateToggleButtonIcon('dark-mode');
+            }
+        });
+    }
+
+    function updateToggleButtonIcon(currentThemeClass) { 
+        const sunIcon = modeToggleButton.querySelector('.fa-sun');
+        const moonIcon = modeToggleButton.querySelector('.fa-moon');
+
+        if (sunIcon && moonIcon) {
+            if (currentThemeClass === 'dark-mode') {
+                sunIcon.style.display = 'inline-block';
+                moonIcon.style.display = 'none';
+            } else { 
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'inline-block';
+            }
+        }
+    }
+});
+*/
 
 // ********************************************
 // Dark/Light Mode Toggle Logic
 // ********************************************
 document.addEventListener('DOMContentLoaded', () => {
     const modeToggleButton = document.getElementById('modeToggleButton');
+    const body = document.body; // لتبسيط الوصول إلى عنصر body
 
     if (modeToggleButton) {
-        // Load theme preference from localStorage or default to 'light'
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        document.body.classList.add(currentTheme + '-theme'); // Apply initial theme class
+        // تحميل تفضيل الوضع من localStorage أو الافتراضي إلى 'dark-mode'
+        // 'dark-mode' هو الافتراضي لأنه يطابق الخلفية الأولية في CSS
+        const savedTheme = localStorage.getItem('theme'); // سيحتوي على 'dark-mode' أو 'light-mode'
 
-        // Set initial icon visibility based on loaded theme
-        const sunIcon = modeToggleButton.querySelector('.fa-sun');
-        const moonIcon = modeToggleButton.querySelector('.fa-moon');
-
-        if (currentTheme === 'dark') {
-            if (sunIcon) sunIcon.style.display = 'inline-block';
-            if (moonIcon) moonIcon.style.display = 'none';
+        if (savedTheme) {
+            body.classList.add(savedTheme); // إضافة الكلاس المحفوظ (مثل 'dark-mode')
+            updateToggleButtonIcon(savedTheme); // تحديث أيقونة الزر عند التحميل
         } else {
-            if (sunIcon) sunIcon.style.display = 'none';
-            if (moonIcon) moonIcon.style.display = 'inline-block';
+            // الافتراضي هو الوضع الليلي إذا لم يتم حفظ أي تفضيل (يتناسب مع تصميم CSS الافتراضي)
+            body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark-mode'); // حفظ الوضع الافتراضي
+            updateToggleButtonIcon('dark-mode'); // تحديث أيقونة الزر
         }
 
         modeToggleButton.addEventListener('click', () => {
-            // Toggle theme classes on the body
-            document.body.classList.toggle('dark-theme');
-            document.body.classList.toggle('light-theme');
-
-            let theme = 'light';
-            if (document.body.classList.contains('dark-theme')) {
-                theme = 'dark';
-            }
-            localStorage.setItem('theme', theme); // Save theme preference
-
-            // Toggle icons visibility based on new theme
-            if (theme === 'dark') {
-                if (sunIcon) sunIcon.style.display = 'inline-block';
-                if (moonIcon) moonIcon.style.display = 'none';
-            } else {
-                if (sunIcon) sunIcon.style.display = 'none';
-                if (moonIcon) moonIcon.style.display = 'inline-block';
+            // تبديل الكلاسات على الـ body
+            if (body.classList.contains('dark-mode')) { // إذا كان الوضع الحالي مظلمًا
+                body.classList.remove('dark-mode'); // إزالة كلاس الوضع المظلم
+                body.classList.add('light-mode'); // إضافة كلاس الوضع الفاتح
+                localStorage.setItem('theme', 'light-mode'); // حفظ التفضيل الجديد
+                updateToggleButtonIcon('light-mode'); // تحديث الأيقونة
+            } else { // إذا كان الوضع الحالي فاتحًا
+                body.classList.remove('light-mode'); // إزالة كلاس الوضع الفاتح
+                body.classList.add('dark-mode'); // إضافة كلاس الوضع المظلم
+                localStorage.setItem('theme', 'dark-mode'); // حفظ التفضيل الجديد
+                updateToggleButtonIcon('dark-mode'); // تحديث الأيقونة
             }
         });
+    }
+
+    // دالة مساعدة لتحديث عرض أيقونة الشمس/القمر
+    function updateToggleButtonIcon(currentThemeClass) {
+        const sunIcon = modeToggleButton.querySelector('.fa-sun');
+        const moonIcon = modeToggleButton.querySelector('.fa-moon');
+
+        if (sunIcon && moonIcon) {
+            if (currentThemeClass === 'dark-mode') {
+                sunIcon.style.display = 'inline-block';
+                moonIcon.style.display = 'none';
+            } else { // light-mode
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'inline-block';
+            }
+        }
     }
 });

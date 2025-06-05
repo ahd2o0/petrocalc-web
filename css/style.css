@@ -13,15 +13,20 @@
     --color-button-clear: #CC703C; /* لون مميز لزر المسح */
     --color-border: #2C4A6B; /* لون للحدود */
     --color-result-value: #63B8FF; /* لون أزرق فاتح مميز للنتائج */
+
+    /* === المتغيرات المضافة / المعدلة لضبط شكل المربعات === */
+    --input-bg: #051A28; /* خلفية حقول الإدخال - تبقى داكنة في الوضع الليلي */
+    --box-shadow-color-dark: rgba(0, 0, 0, 0.4); /* ظل للحاويات في الوضع الليلي (أكثر بروزاً) */
+    --box-shadow-color-light: rgba(0, 0, 0, 0.2); /* ظل للأزرار وغيرها (أخف) */
 }
 
 /* Light Mode specific colors */
 body.light-mode {
-    --color-primary-dark-blue: #F0F4F8; /* خلفية فاتحة جداً */
+    --color-primary-dark-blue: #F0F4F8; /* خلفية فاتحة جداً (للون الرئيسي للخلفية) */
     --color-accent-blue: #005691; /* أزرق غامق للأزرار والعناوين */
     --color-text-light: #333333; /* لون نص داكن */
     --color-text-muted: #555555; /* لون نص رمادي داكن للنصوص الثانوية */
-    --color-background-light: #FFFFFF; /* لون أفتح للعناصر البارزة */
+    --color-background-light: #FFFFFF; /* لون أفتح للعناصر البارزة (الحاويات) */
     --color-gradient-start: #E0E6EB;
     --color-gradient-end: #F0F4F8;
     --color-error: #CC0000; /* أحمر داكن للأخطاء */
@@ -29,6 +34,11 @@ body.light-mode {
     --color-button-clear: #E67E22; /* برتقالي للزر المسح */
     --color-border: #D1D9E0; /* لون أفتح للحدود */
     --color-result-value: #007BFF; /* أزرق متوسط للنتائج */
+
+    /* === المتغيرات المضافة / المعدلة لضبط شكل المربعات في الوضع الفاتح === */
+    --input-bg: #FFFFFF; /* خلفية حقول الإدخال في الوضع الفاتح */
+    --box-shadow-color-dark: rgba(0, 0, 0, 0.2); /* ظل للحاويات في الوضع الفاتح (أخف) */
+    --box-shadow-color-light: rgba(0, 0, 0, 0.1); /* ظل للأزرار وغيرها (أخف جداً) */
 }
 
 
@@ -50,7 +60,7 @@ body {
     padding: 30px; /* زيادة البادينغ */
     background-color: var(--color-background-light); /* استخدام لون خلفية أغمق للكونتينر */
     border-radius: 12px; /* زوايا أكثر استدارة */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* ظل أكثر بروزاً */
+    box-shadow: 0 8px 20px var(--box-shadow-color-dark); /* ظل أكثر بروزاً */
     flex-grow: 1; /* لجعل المحتوى يملأ المساحة */
     border: 1px solid var(--color-border); /* إضافة حد خفيف */
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -97,7 +107,7 @@ body {
     align-items: center; /* توسيط عمودي */
     justify-content: center; /* توسيط أفقي */
     gap: 10px; /* مسافة بين الأيقونة والنص */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* ظل خفيف للأزرار */
+    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* ظل خفيف للأزرار */
 }
 
 .menu-button i { /* تنسيقات الأيقونات */
@@ -114,9 +124,9 @@ body {
     max-width: 700px;
     margin: 30px auto;
     padding: 25px;
-    background-color: var(--color-background-light);
+    background-color: var(--color-background-light); /* يستخدم لون الخلفية الأفتح للحاويات */
     border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 15px var(--box-shadow-color-dark); /* يستخدم الظل الداكن للمربعات الكبيرة */
     border: 1px solid var(--color-border);
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
@@ -156,33 +166,34 @@ body {
 }
 
 .input-group input[type="number"],
-.input-group input[type="text"] {
+.input-group input[type="text"],
+.input-group select { /* أضفت select هنا للتأكد من تنسيقها أيضاً */
     width: 100%;
     padding: 12px;
     border: 1px solid var(--color-border);
-    border-radius: 6px;
-    background-color: var(--color-primary-dark-blue); /* خلفية داكنة لحقول الإدخال */
+    border-radius: 8px;
+    background-color: var(--input-bg); /* يستخدم متغير --input-bg لخلفية حقول الإدخال */
     color: var(--color-text-light);
     font-size: 1.1em;
-    box-sizing: border-box; /* لضمان أن البادينغ لا يزيد العرض الكلي */
+    box-sizing: border-box;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .input-group input[type="number"]::placeholder,
 .input-group input[type="text"]::placeholder {
-    color: var(--color-text-muted); /* لون الفلاتر */
+    color: var(--color-text-muted);
     transition: color 0.3s ease;
 }
 
 .button-group {
     display: flex;
     justify-content: space-around;
-    gap: 15px; /* مسافة بين الأزرار */
+    gap: 15px;
     margin-top: 25px;
 }
 
 .button-group button {
-    flex: 1; /* لجعل الأزرار تتوزع بالتساوي */
+    flex: 1;
     padding: 15px 20px;
     border: none;
     border-radius: 8px;
@@ -190,7 +201,7 @@ body {
     font-size: 1.1em;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* يستخدم الظل الخفيف للأزرار */
 }
 
 .button-group button.calculate {
@@ -204,38 +215,38 @@ body {
 }
 
 .button-group button.clear {
-    background-color: var(--color-button-clear); /* لون مميز لزر المسح */
+    background-color: var(--color-button-clear);
     color: white;
 }
 
 .button-group button.clear:hover {
-    background-color: #A6572A; /* لون أغمق للمسح عند الهوفر */
+    background-color: #A6572A;
     transform: translateY(-3px);
 }
 
 .result-box {
-    background-color: var(--color-primary-dark-blue); /* خلفية داكنة لصندوق النتائج */
+    background-color: var(--color-background-light); /* يستخدم لون الخلفية الأفتح لصندوق النتائج */
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: 12px; /* زوايا مستديرة أكثر */
     padding: 20px;
     margin-top: 30px;
     font-size: 1.2em;
     color: var(--color-text-light);
     text-align: center;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* ظل داخلي */
+    box-shadow: 0 4px 15px var(--box-shadow-color-dark); /* ظل خارجي للحاويات */
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .result-box p {
     margin: 0;
     padding: 5px 0;
-    color: var(--color-text-light); /* لضمان لون نص صحيح */
+    color: var(--color-text-light);
     transition: color 0.3s ease;
 }
 
 .result-box span.value {
     font-weight: bold;
-    color: var(--color-result-value); /* لون أزرق فاتح مميز للنتائج */
+    color: var(--color-result-value);
     font-size: 1.3em;
     transition: color 0.3s ease;
 }
@@ -262,7 +273,7 @@ body {
     text-decoration: none;
     font-size: 1.1em;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* يستخدم الظل الخفيف للأزرار */
 }
 
 .back-button-container a:hover {
@@ -309,7 +320,7 @@ body {
     position: relative;
     bottom: 0;
     width: 100%;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); /* ظل أقوى */
+    box-shadow: 0 -4px 10px var(--box-shadow-color-dark); /* ظل أقوى */
     margin-top: 50px;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -382,9 +393,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px var(--box-shadow-color-dark); /* يستخدم الظل الداكن */
     z-index: 1000; /* Ensure it stays on top */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .mode-toggle-button:hover {
@@ -393,153 +404,188 @@ body {
 }
 
 .mode-toggle-button .fa-sun, .mode-toggle-button .fa-moon {
-    transition: opacity 0.3s ease;
+    /* These will be controlled by JS for display: none/inline-block */
+    transition: opacity 0.3s ease, color 0.3s ease; /* Added color transition */
 }
 
-.mode-toggle-button .fa-moon {
-    display: none; /* Hide moon icon by default in dark mode */
-}
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetroCalc - Petroleum Engineering Hub</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
-        <i class="fas fa-sun"></i> <i class="fas fa-moon"></i> </button>
-
-    <div class="main-container">
-        <h1 class="main-title">Welcome to PetroCalc</h1>
-        <p class="subtitle">Your comprehensive hub for petroleum engineering calculations, information, and resources.</p>
-
-        <div class="menu-buttons-layout">
-            <button class="menu-button" onclick="window.location.href='calculators-hub.html'"><i class="fas fa-calculator"></i> Calculators</button>
-            <button class="menu-button" onclick="window.location.href='information.html'"><i class="fas fa-lightbulb"></i> Information & Concepts</button>
-            <button class="menu-button" onclick="window.location.href='resources.html'"><i class="fas fa-book"></i> Resources & References</button>
-            <button class="menu-button" onclick="window.location.href='videos.html'"><i class="fas fa-video"></i> Educational Videos</button>
-        </div>
-
-        <footer class="footer">
-            <div class="footer-links">
-                <a href="about.html">About Us</a> |
-                <a href="contact.html">Contact Us</a> |
-                <a href="privacy.html">Privacy Policy</a>
-            </div>
-            <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
-        </footer>
-    </div>
-
-    <script src="js/calculations.js"></script>
-</body>
-</html>
-body.light-mode .mode-toggle-button .fa-sun {
+/* --- IMPORTANT: Corrected Dark/Light Mode Icon Display Logic --- */
+body.light-theme .mode-toggle-button .fa-sun {
     display: none; /* Hide sun icon in light mode */
 }
-
-body.light-mode .mode-toggle-button .fa-moon {
+body.light-theme .mode-toggle-button .fa-moon {
     display: inline-block; /* Show moon icon in light mode */
-}/* General Button Styling for Calculation Pages */
-.calc-button,
-.clear-button {
-    padding: 12px 25px;
-    margin: 15px 10px 5px 0; /* Adjusted margin for better spacing */
-    border: none;
+    color: var(--color-text-light); /* Ensure moon icon color changes */
+}
+
+body.dark-theme .mode-toggle-button .fa-moon {
+    display: none; /* Hide moon icon in dark mode */
+}
+body.dark-theme .mode-toggle-button .fa-sun {
+    display: inline-block; /* Show sun icon in dark mode */
+    color: #FFD700; /* Sun icon color (yellow) */
+}
+
+
+/* --- New styles for Video Links (from videos.html) --- */
+.info-section {
+    background-color: var(--color-background-light); /* Use background color from theme */
+    border-radius: 12px; /* زوايا مستديرة أكثر */
+    box-shadow: 0 4px 15px var(--box-shadow-color-dark); /* يستخدم الظل الداكن */
+    padding: 30px;
+    margin-top: 30px;
+    text-align: left; /* Align text to the left within this section */
+    border: 1px solid var(--color-border); /* Add border */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.info-section h2.section-title { /* Added .section-title to be more specific */
+    color: var(--color-accent-blue);
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 10px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.info-section p {
+    color: var(--color-text-muted); /* Ensure text within info-section respects theme */
+    margin-top: 15px;
+    font-size: 1em;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.info-section p.guidance-text { /* Specific style for guidance text */
+    font-style: italic;
+    font-size: 0.9em;
+    color: var(--color-text-muted);
+    margin-top: 10px;
+}
+
+.video-link-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center; /* Center the link button */
+}
+
+.video-link-container a {
+    display: inline-flex; /* Use inline-flex for centering icon and text */
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-accent-blue); /* Consistent button color */
+    color: white;
+    padding: 15px 30px;
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.1em; /* Slightly larger font */
+    text-decoration: none;
+    font-size: 1.1em;
     font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
-    display: inline-block; /* Ensure buttons are side-by-side if needed */
-    width: auto; /* Allow button to size to content */
-    min-width: 150px; /* Minimum width for consistency */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px var(--box-shadow-color-light); /* يستخدم الظل الخفيف للأزرار */
+    gap: 10px; /* Space between icon and text */
+    min-width: 250px; /* Ensure button has a minimum width */
 }
 
-.calc-button {
-    background-color: var(--color-accent-blue); /* لون الزر الأساسي للحسابات */
-    color: var(--color-text-light);
+.video-link-container a:hover {
+    background-color: var(--color-button-hover);
+    transform: translateY(-3px);
 }
 
-.calc-button:hover {
-    background-color: var(--color-button-hover); /* لون أغمق عند التمرير */
-    transform: translateY(-2px); /* تأثير رفع بسيط */
+.video-link-container a .fab.fa-youtube {
+    color: #FF0000; /* YouTube red color */
+    font-size: 1.3em; /* Larger icon */
+    transition: color 0.3s ease;
 }
 
-.calc-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .main-container {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+    .main-title {
+        font-size: 2.2em;
+    }
+    .subtitle {
+        font-size: 1em;
+        margin-bottom: 30px;
+    }
+    .menu-buttons-layout {
+        grid-template-columns: 1fr; /* Stack buttons on small screens */
+    }
+    .menu-button {
+        font-size: 1.1em;
+        padding: 15px 20px;
+    }
+    .calculation-container {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+    .calculation-container h1 {
+        font-size: 1.8em;
+    }
+    .input-group label {
+        font-size: 1em;
+    }
+    .input-group input, .input-group select { /* أضفت select هنا للتأكد من تنسيقها أيضاً */
+        font-size: 1em;
+        padding: 10px;
+    }
+    .button-group {
+        flex-direction: column; /* Stack buttons on small screens */
+    }
+    .button-group button {
+        font-size: 1em;
+        padding: 12px 15px;
+        min-width: unset; /* Remove min-width for stacking */
+    }
+    .result-box {
+        font-size: 1.1em;
+        padding: 15px;
+    }
+    .result-box span.value {
+        font-size: 1.2em;
+    }
+    .back-button-container a {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+    .info-section {
+        padding: 20px;
+    }
+    .info-section h2 {
+        font-size: 1.4em;
+    }
+    .video-link-container a {
+        font-size: 1em;
+        padding: 12px 20px;
+        min-width: unset; /* Allow button to shrink on small screens */
+    }
+} /* نهاية @media (max-width: 768px) */
 
-.clear-button {
-    background-color: var(--color-button-clear); /* لون زر المسح البرتقالي */
-    color: var(--color-text-light);
-}
-
-.clear-button:hover {
-    background-color: #A05C31; /* لون أغمق قليلاً لزر المسح */
-    transform: translateY(-2px);
-}
-
-.clear-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Dark/Light Mode Toggle Button Specific Styles */
-.mode-toggle-button {
-    position: fixed; /* Fixed position on the screen */
-    top: 20px;
-    right: 20px;
-    background-color: var(--color-background-light); /* Background from theme */
-    color: var(--color-text-light); /* Icon color from theme */
+/*
+    *** مهم جداً: هذه التنسيقات تم نقلها خارج استعلام الوسائط (@media)
+    *** لضمان تطبيقها على جميع أحجام الشاشات.
+*/
+.chart-display-box {
+    width: 100%;
+    max-width: 700px; /* زيادة قليلاً ليتناسق مع calculation-container */
+    height: 400px;
+    margin: 20px auto;
+    background-color: var(--color-background-light); /* تم تغيير اللون ليتناسق مع result-box */
+    padding: 20px; /* زيادة البادينغ */
+    border-radius: 12px; /* زوايا مستديرة أكثر */
+    box-shadow: 0 6px 15px var(--box-shadow-color-dark); /* يستخدم الظل الداكن */
     border: 1px solid var(--color-border);
-    border-radius: 50%; /* Make it circular */
-    width: 45px; /* Size of the button */
-    height: 45px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    font-size: 1.3em;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    z-index: 1000; /* Ensure it's above other content */
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* **هذه مهمة جداً لاحتواء الرسم البياني!** */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.mode-toggle-button:hover {
-    background-color: var(--color-button-hover);
-    transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-.mode-toggle-button i {
-    display: none; /* Hide both icons by default, controlled by JS */
-}
-
-.mode-toggle-button i.fas.fa-sun {
-    color: #FFD700; /* Sun icon color */
-}
-
-.mode-toggle-button i.fas.fa-moon {
-    color: #CCCCFF; /* Moon icon color */
-}
-
-/* Ensure one icon is visible based on theme through JS */
-body.light-theme .mode-toggle-button .fa-moon {
-    display: inline-block;
-}
-
-body.dark-theme .mode-toggle-button .fa-sun {
-    display: inline-block;
-}
-
-/* If the icons are not explicitly hidden by JS, this makes sure only one is visible */
-body.light-theme .mode-toggle-button .fa-sun {
-    display: none;
-}
-body.dark-theme .mode-toggle-button .fa-moon {
-    display: none;
+.chart-display-box canvas {
+    max-width: 100%;
+    max-height: 100%;
+    display: block; /* هذا يمكن أن يساعد في العرض */
 }

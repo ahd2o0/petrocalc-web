@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Generator - PetroCalc</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+</head>
+<body>
+    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="main-container">
+        <h1 class="main-title">Chart Generator</h1>
+        <p class="subtitle">Create and visualize your data.</p>
+
+        <main>
+            <section class="content-section chart-section">
+                <div class="calculator-container">
+                    <h2>Input Data</h2>
+                    
+                    <div class="input-group">
+                        <label for="xAxisName">X-Axis Title:</label>
+                        <input type="text" id="xAxisName" placeholder="e.g., Pressure (psi)">
+                    </div>
+                    <div class="input-group">
+                        <label for="yAxisName">Y-Axis Title:</label>
+                        <input type="text" id="yAxisName" placeholder="e.g., Flow Rate (STB/Day)">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="xValues">X-Axis Values (separated by commas):</label>
+                        <input type="text" id="xValues" placeholder="Example: 1000,950,900,850">
+                    </div>
+                    <div class="input-group">
+                        <label for="yValues">Y-Axis Values (separated by commas):</label>
+                        <input type="text" id="yValues" placeholder="Example: 500,550,600,650">
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="drawChartButton" class="calculate-button">Generate Chart</button>
+                        <button id="clearChartButton" class="clear-button">Clear</button>
+                        <button id="saveChartButton" class="calculate-button">Save Chart as Image</button>
+                    </div>
+
+                    <div class="result-box chart-display-box">
+                        <h3>Chart Display</h3>
+                        <canvas id="myLineChart"></canvas>
+                        <p id="chartError" class="error-message" style="display: none; color: red;"></p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="about.html">About Us</a> |
+                <a href="contact.html">Contact Us</a> |
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+            <p>&copy; 2025 PetroCalc Web. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="js/calculations.js"></script>
+</body>
+</html>
