@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetroCalc - مساعد الذكاء الاصطناعي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/chat-style.css"> </head>
+<body>
+    <button id="modeToggleButton" class="mode-toggle-button" aria-label="Toggle dark and light mode">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="main-container calculation-container">
+        <h1 class="main-title">مساعد PetroCalc للذكاء الاصطناعي</h1>
+        <p class="subtitle">اسأل مساعدك الذكي عن أي شيء في هندسة النفط والغاز!</p>
+
+        <div class="chat-wrapper">
+            <div class="chat-history" id="chat-history">
+                <p><strong>AI:</strong> مرحباً بك في مساعد PetroCalc الذكي! كيف يمكنني مساعدتك اليوم في هندسة النفط والغاز؟</p>
+            </div>
+            <div class="chat-input-area">
+                <textarea id="user-input" placeholder="اكتب سؤالك هنا..."></textarea>
+                <button id="send-button">
+                    <i class="fas fa-paper-plane"></i> إرسال
+                </button>
+            </div>
+        </div>
+
+        <div class="back-button-container">
+            <a href="index.html" class="menu-button"><i class="fas fa-arrow-left"></i> العودة للصفحة الرئيسية</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="about.html">عنّا</a> |
+            <a href="contact.html">اتصل بنا</a> |
+            <a href="privacy.html">سياسة الخصوصية</a>
+        </div>
+        <p>&copy; 2025 PetroCalc Web. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="js/calculations.js"></script>
+    <script src="js/ai-chat.js"></script>
+</body>
+</html>

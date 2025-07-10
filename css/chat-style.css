@@ -1,0 +1,220 @@
+/* تنسيقات خاصة لواجهة الدردشة في PetroCalc */
+
+.chat-wrapper {
+    width: 100%;
+    max-width: 700px; /* حجم معقول لنافذة الدردشة */
+    margin: 30px auto; /* مسافة من الأعلى والأسفل */
+    background-color: var(--color-background-light); /* خلفية داكنة داخل مربع المحادثة */
+    border-radius: 12px; /* حواف مستديرة أكثر */
+    box-shadow: 0 6px 15px var(--box-shadow-color-dark); /* ظل أفضل */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 500px; /* لضمان ارتفاع كافٍ */
+    border: 1px solid var(--color-border);
+}
+
+/* تعديل خلفية الـ wrapper للوضع الفاتح */
+body.light-mode .chat-wrapper {
+    background-color: #f8f9fa; /* لون فاتح ناعم */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* ظل أفتح */
+    border-color: #ddd;
+}
+
+.chat-history {
+    flex-grow: 1;
+    padding: 25px; /* مسافة داخلية أكبر */
+    overflow-y: auto;
+    max-height: 400px; /* ارتفاع أقصى لسجل الدردشة */
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-light); /* لون النص */
+    line-height: 1.7; /* مسافة سطرية مريحة */
+    display: flex; /* لترتيب الرسائل بشكل صحيح */
+    flex-direction: column; /* الرسائل عمودية */
+}
+
+/* تنسيقات الرسائل الفردية */
+.chat-history p {
+    margin-bottom: 12px; /* مسافة بين الرسائل */
+    word-wrap: break-word; /* لضمان التفاف النص الطويل */
+    padding: 10px 15px;
+    border-radius: 18px; /* حواف مستديرة للفقرات */
+    max-width: 85%; /* لتبدو كفقاعات دردشة */
+}
+
+.chat-history p strong {
+    color: var(--color-accent-blue);
+    margin-right: 5px; /* مسافة بعد اسم المرسل */
+}
+
+/* تنسيق رسائل المستخدم */
+.chat-history p strong:first-child { /* لتمييز رسائل المستخدم */
+    color: var(--color-button-clear); /* لون مميز لاسم "أنت" */
+}
+
+
+#typing-indicator {
+    font-style: italic;
+    color: var(--color-text-muted);
+    background-color: var(--color-background-light); /* نفس خلفية الـ wrapper */
+    padding: 10px 15px;
+    border-radius: 18px;
+    align-self: flex-start; /* لتبدأ من اليسار */
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 15px;
+    background-color: var(--color-primary-dark-blue); /* لون خلفية منطقة الإدخال */
+    border-top: 1px solid var(--color-border);
+    gap: 12px; /* مسافة بين مربع النص والزر */
+    align-items: center; /* لمحاذاة العناصر عمودياً */
+}
+
+/* تعديل خلفية منطقة الإدخال للوضع الفاتح */
+body.light-mode .chat-input-area {
+    background-color: #e9ecef; /* لون فاتح مختلف */
+    border-color: #ccc;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    color: var(--color-text-light);
+    font-size: 1.05em; /* خط أكبر قليلاً */
+    resize: vertical; /* يمكن للمستخدم تغيير حجم مربع النص عمودياً */
+    min-height: 45px;
+    max-height: 120px; /* لضمان عدم تمددها كثيراً */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#user-input:focus {
+    outline: none;
+    border-color: var(--color-accent-blue);
+    box-shadow: 0 0 0 3px rgba(16, 106, 159, 0.3); /* ظل حول التركيز */
+}
+
+#user-input::placeholder {
+    color: var(--color-text-muted);
+}
+
+#send-button {
+    background-color: var(--color-accent-blue);
+    color: white;
+    border: none;
+    padding: 12px 22px; /* حجم أكبر للزر */
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.15em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* ظل أقوى للزر */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#send-button i {
+    font-size: 1.25em; /* أيقونة أكبر */
+}
+
+#send-button:hover {
+    background-color: var(--color-button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* تحسين زر العودة */
+.back-button-container {
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.back-button-container a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 25px;
+    background-color: var(--color-background-light);
+    color: var(--color-accent-blue);
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.light-mode .back-button-container a {
+    background-color: #fff;
+    color: var(--color-accent-blue);
+    border-color: #ddd;
+}
+
+.back-button-container a:hover {
+    background-color: var(--color-accent-blue);
+    color: white;
+    border-color: var(--color-accent-blue);
+}
+
+.back-button-container a i {
+    font-size: 1.1em;
+}
+
+/* Responsive for chat */
+@media (max-width: 768px) {
+    .chat-wrapper {
+        margin: 15px;
+        min-height: 450px;
+        border-radius: 8px;
+    }
+    .chat-history {
+        padding: 15px;
+        max-height: 350px;
+    }
+    .chat-history p {
+        padding: 8px 12px;
+        margin-bottom: 8px;
+    }
+    .chat-input-area {
+        flex-direction: column;
+        padding: 10px;
+        gap: 8px;
+    }
+    #user-input {
+        margin-right: 0;
+        min-height: 40px;
+        max-height: 80px;
+    }
+    #send-button {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+    .back-button-container {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .back-button-container a {
+        padding: 10px 20px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-history {
+        max-height: 300px;
+        padding: 10px;
+    }
+    .chat-input-area {
+        padding: 8px;
+    }
+    #user-input {
+        font-size: 0.9em;
+    }
+    #send-button {
+        font-size: 0.9em;
+    }
+}
